@@ -125,6 +125,20 @@ body.steer-stick.car #joyZone{display:block!important}body.steer-stick.car #bL,b
 body.lefty #bGas{right:auto;left:calc(var(--sal) + 18px)}body.lefty #bBrake{right:auto;left:calc(var(--sal) + 124px)}body.lefty #bNitro{right:auto;left:calc(var(--sal) + 30px)}body.lefty #bHand{right:auto;left:calc(var(--sal) + 112px)}body.lefty #bHorn{right:auto;left:calc(var(--sal) + 186px)}
 body.lefty #bL{left:auto;right:calc(var(--sar) + 114px)}body.lefty #bR{left:auto;right:calc(var(--sar) + 18px)}
 @media (orientation:portrait){#bGas{width:84px;height:84px}#bBrake{width:64px;height:64px;right:calc(var(--sar) + 106px)}#bL,#bR{width:72px;height:72px}#bR{left:calc(var(--sal) + 98px)}#bHand{right:calc(var(--sar) + 96px);bottom:calc(var(--sab) + 92px);width:56px;height:56px}#bNitro{bottom:calc(var(--sab) + 118px);width:56px;height:56px}#bHorn{right:calc(var(--sar) + 22px);bottom:calc(var(--sab) + 184px);width:44px;height:44px}#bSiren{right:calc(var(--sar) + 76px);bottom:calc(var(--sab) + 160px)}body.car #bEnter{bottom:calc(var(--sab) + 236px)}#bSpray{right:calc(var(--sar) + 20px);bottom:calc(var(--sab) + 290px)}#speedo{bottom:calc(var(--sab) + 112px)}#prompt{bottom:calc(var(--sab) + 200px)}#obj{max-width:calc(100vw - 150px);top:calc(var(--sat) + 150px)}#toasts{top:calc(var(--sat) + 220px)}#hudTR{max-width:104px}}
+
+/* polished control buttons: glossy dome, coloured rim, inner depth */
+.cb{background:radial-gradient(circle at 50% 30%,rgba(70,86,120,.78),rgba(18,26,46,.82) 70%);box-shadow:0 5px 0 rgba(0,0,0,.28),0 8px 18px rgba(0,0,0,.35),inset 0 0 0 2.5px rgba(255,255,255,.55),inset 0 -6px 10px rgba(0,0,0,.28);letter-spacing:.5px;transition:transform .06s}
+.cb::before{content:"";position:absolute;left:14%;right:14%;top:6%;height:38%;border-radius:50% 50% 45% 45%/60% 60% 40% 40%;background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,0));pointer-events:none}
+#bL::before,#bR::before{border-radius:16px 16px 40% 40%}
+.cb.on{transform:scale(.9) translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.28),0 4px 10px rgba(0,0,0,.35),inset 0 0 0 2.5px rgba(255,255,255,.75),inset 0 4px 10px rgba(0,0,0,.25)}
+#bGas{background:radial-gradient(circle at 50% 30%,#5df0a6,#16a565 72%)}
+#bBrake{background:radial-gradient(circle at 50% 30%,#ff8d80,#d33a32 72%)}
+#bNitro{background:radial-gradient(circle at 50% 30%,#7cc4ff,#1f6fe0 72%)}
+#bEnter{background:radial-gradient(circle at 50% 30%,#ffe27a,#f2a611 72%)}
+#bSpray{background:radial-gradient(circle at 50% 30%,#8fe4ff,#1aa0dc 72%)}
+#bGas.on,#bBrake.on,#bNitro.on,#bSpray.on{filter:brightness(1.18)}
+.ib{background:linear-gradient(180deg,rgba(44,60,96,.86),rgba(14,22,40,.86));box-shadow:0 3px 0 rgba(0,0,0,.25),0 5px 12px rgba(0,0,0,.35),inset 0 0 0 1.5px rgba(255,255,255,.28),inset 0 1px 0 rgba(255,255,255,.35)}
+.pill{background:linear-gradient(180deg,rgba(30,44,74,.86),rgba(12,18,34,.86));box-shadow:0 3px 10px rgba(0,0,0,.3),inset 0 0 0 1px rgba(255,255,255,.18)}
 /* dialog */
 #dlg{position:fixed;left:50%;bottom:calc(var(--sab) + 14px);transform:translateX(-50%);width:min(680px,calc(100vw - 24px));z-index:40;display:flex;gap:12px;align-items:flex-start;background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(232,240,255,.97));color:#1b2a4a;border-radius:20px;padding:14px 16px;box-shadow:0 12px 34px rgba(0,0,0,.45);border:3px solid #fff;cursor:pointer;pointer-events:auto}
 #dlgAv{width:62px;height:62px;flex:0 0 62px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)}
@@ -369,7 +383,7 @@ vec3 grade(vec3 c){ c = max(c, 0.); vec3 k = max(c - .72, 0.); c = c - k + k/(1.
 vec3 envCol(vec3 R){ float y = R.y; vec3 c = mix(uHor, uSky*1.15, smoothstep(0.,.5,y)); c = mix(c, uGnd*.8, smoothstep(0.,-.25,y)); return c + uSunCol*pow(max(dot(R,uSunDir),0.),24.)*.6; }
 vec3 shade(vec3 base, vec3 n, vec3 W, float gls, float ao, float sh){
   vec3 V = uCam - W; float dist = length(V); V /= dist;
-  float up = step(.8, n.y); float wet = uWet*up; base *= 1. - .3*wet; gls = max(gls, wet*.6);
+  float up = step(.8, n.y); float wet = uWet*up; float pud = wet > 0. ? smoothstep(.5,.68,vno(W.xz*.12)) : 0.; base *= 1. - .3*wet - .2*pud*wet; gls = max(gls, wet*(.55 + .4*pud));
   float ndl = max(dot(n, uSunDir), 0.)*sh;
   vec3 amb = mix(uGnd, uSky, n.y*.5+.5)*ao;
   vec3 col = base*(amb + uSunCol*ndl);
@@ -380,7 +394,7 @@ vec3 shade(vec3 base, vec3 n, vec3 W, float gls, float ao, float sh){
     col += base*uHL*cone*(max(dot(n,L),0.)*.8+.2)*(120./(d*d*.3+40.))*vec3(1.,.93,.8); }
   return col;
 }
-vec3 fogit(vec3 col, vec3 W){ float dist = length(uCam - W); float f = 1. - exp(-dist*dist*uFogD*uFogD); float hfall = exp(-max(W.y,0.)*.004); return mix(col, uFogCol, clamp(f*hfall,0.,1.)); }
+vec3 fogit(vec3 col, vec3 W){ vec3 dv = W - uCam; float dist = length(dv); float f = 1. - exp(-dist*dist*uFogD*uFogD); float hfall = exp(-max(W.y,0.)*.006); float sc = pow(max(dot(dv/max(dist,.01), uSunDir),0.), 6.); vec3 fc = uFogCol + uSunCol*sc*.12*(1.-uNight); return mix(col, fc, clamp(f*hfall,0.,1.)); }
 float emis(float em, float flags){
   if(em < .5) return 0.;
   if(em < 1.5) return 1.;
@@ -402,25 +416,39 @@ const FS_STATIC = PREC + `varying vec3 vW, vN; varying vec4 vC, vM, vS;
 void main(){
   vec3 n = dot(vN,vN) > 1e-6 ? normalize(vN) : vec3(0.,1.,0.); vec3 base = vC.rgb; float ao = vC.a; float gls = vM.x/255.; float sp = vM.z; float e = emis(vM.y, 0.);
   vec3 ecol = base*1.7;
+  float gao = abs(n.y) < .5 ? mix(.58, 1., smoothstep(.2, 3.2, vW.y)) : 1.;
   if(sp > .5 && sp < 1.5 && abs(n.y) < .5){
-    float st = floor(vM.w/64.); float seed = mod(vM.w,64.);
+    float mw = floor(vM.w + .5); float st = floor(mw/64. + .001); float seed = mw - st*64.;
     float u = abs(n.x) > abs(n.z) ? vW.z : vW.x;
     vec2 cs = st < .5 ? vec2(3.2,3.6) : st < 1.5 ? vec2(1.6,3.6) : st < 2.5 ? vec2(4.,3.6) : vec2(2.6,3.);
     vec2 cell = vec2(u/cs.x, (vW.y-.4)/cs.y); vec2 f = fract(cell); vec2 id = floor(cell);
-    float win;
-    if(st < .5) win = step(.16,f.x)*step(f.x,.84)*step(.22,f.y)*step(f.y,.86);
-    else if(st < 1.5) win = step(.06,f.x)*step(f.x,.94)*step(.12,f.y)*step(f.y,.9);
-    else if(st < 2.5) win = step(.1,f.x)*step(f.x,.6)*step(.15,f.y)*step(f.y,.92);
-    else win = step(.25,f.x)*step(f.x,.75)*step(.3,f.y)*step(f.y,.8);
-    float gf = 1. - step(.5, id.y); win = mix(win, step(.08,f.x)*step(f.x,.92)*step(.05,f.y)*step(f.y,.8), gf);
+    vec4 wr = st < .5 ? vec4(.16,.84,.22,.86) : st < 1.5 ? vec4(.06,.94,.12,.9) : st < 2.5 ? vec4(.1,.6,.15,.92) : vec4(.22,.78,.26,.82);
+    float gf = 1. - step(.5, id.y); wr = mix(wr, vec4(.06,.94,.05,.82), gf);
+    float win = step(wr.x,f.x)*step(f.x,wr.y)*step(wr.z,f.y)*step(f.y,wr.w);
+    float fw = .035; float frm = (step(wr.x-fw,f.x)*step(f.x,wr.y+fw)*step(wr.z-fw,f.y)*step(f.y,wr.w+fw)) - win;
+    float mull = st > 1.5 ? 0. : step(abs(f.x - (wr.x+wr.y)*.5), .012)*win;
+    float sill = step(wr.z-.07,f.y)*step(f.y,wr.z-.01)*step(wr.x-.04,f.x)*step(f.x,wr.y+.04)*(1.-gf);
+    float ledge = (1.-gf)*step(f.y,.045); float ledgeSh = (1.-gf)*smoothstep(.13,.05,f.y)*step(.045,f.y);
     float h = hs2(id + seed*7.13);
-    vec3 wc = mix(vec3(.16,.24,.34), vec3(.30,.42,.55), h*.6);
-    float fd = smoothstep(70., 260., length(uCam - vW)); win = mix(win, .45, fd);
-    base = mix(base, wc, win); gls = mix(gls, .85, win);
-    float lit = step(.52, h) * win;
-    e = max(e, lit*uNight); ecol = mix(vec3(1.,.82,.5), vec3(.75,.88,1.), step(.85,h))*1.2;
+    vec3 Vd = normalize(uCam - vW); vec3 Rr = reflect(-Vd, n);
+    vec3 wc = mix(vec3(.13,.2,.3), vec3(.27,.4,.54), h*.7);
+    wc = mix(wc, envCol(Rr)*.85, .38 + .25*(1.-f.y));
+    wc *= .9 + .2*smoothstep(wr.z, wr.w, f.y);
+    float blind = step(.72, hs2(id*1.7 + seed)) * step(mix(wr.w, wr.z, .45 + .4*hs2(id+3.1)), f.y);
+    wc = mix(wc, vec3(.82,.78,.68), blind*.7*(1.-gf));
+    float dcam = length(uCam - vW); float px = min(cs.x, cs.y)*max(abs(dot(n, Vd)), .02)/dcam*650.;
+    float fd = max(smoothstep(70., 260., dcam), 1. - smoothstep(5., 14., px));
+    vec3 fcol = mix(base, vec3(.94,.93,.9), .55);
+    base = mix(base, base*1.12 + .04, ledge); base *= 1. - .22*ledgeSh; base = mix(base, base*1.1+.05, sill);
+    base = mix(base, fcol, frm*(1.-fd)); win = mix(win, .45, fd); mull *= 1.-fd;
+    base = mix(base, wc, win); base = mix(base, fcol*.8, mull); gls = mix(gls, .9, win);
+    float lit = mix(step(.5, h) * win, .3, fd);
+    float lv = mix(.75 + .5*hs2(id*2.3+seed), .9, fd); blind *= 1. - fd;
+    e = max(e, lit*uNight*lv); ecol = mix(vec3(1.,.8,.48), vec3(.75,.88,1.), step(.86,h))*(1.05 + .25*(1.-f.y));
+    ecol = mix(ecol, ecol*.55, blind);
     ao = 1.;
   }
+  ao *= gao;
   if(sp > 2.5 && sp < 3.5){ gls = .9; }
   if(n.y > .9){
     if(sp > 3.5 && sp < 5.5){ float ts = sp < 4.5 ? 1.25 : 2.5; vec2 g = vW.xz/ts; vec2 gf = abs(fract(g) - .5); float ln = smoothstep(.47,.495,max(gf.x,gf.y)); float tv = hs2(floor(g)); base *= (.94 + .1*tv)*(1. - .16*ln); }
@@ -468,6 +496,7 @@ void main(){
   if(uDmg > 0. && vM.w > .5 && vM.w < 1.5){ float d = hs2(floor(vW.xz*3.)+floor(vW.y*3.)); base *= 1. - uDmg*.45*step(.55, d); gls *= 1. - uDmg*.7; }
   float sh = shadowAt(vS);
   vec3 col = shade(base, n, vW, gls, vC.a, sh);
+  if(vM.w > .5 && vM.w < 2.5 && vM.z < 9.5){ vec3 V2 = normalize(uCam - vW); vec3 R2 = reflect(-V2, n); float fr2 = pow(1. - max(dot(n,V2),0.), 3.); col += envCol(R2)*fr2*.22*gls + uSunCol*pow(max(dot(R2,uSunDir),0.), 90.)*.9*sh*gls; }
   if(e > 0.) col = mix(col, vC.rgb*1.8 + .15, e*.95);
   gl_FragColor = vec4(grade(fogit(col, vW)), 1.);
 }`;
@@ -492,11 +521,19 @@ void main(){
     vec2 sp = d.xz/(y+.05)*30.; float st = step(.997, h2(floor(sp*6.)))*smoothstep(.0,.3,y);
     col += vec3(st)*uNight*.9*(.6+.4*sin(uTime*3.+h2(floor(sp*6.))*20.));
     if(uQ > .5){
-      vec2 cp = d.xz/(y+.08)*1.4 + vec2(uTime*.006, uTime*.002);
-      float c = vn(cp)*.55 + vn(cp*2.3)*.3 + vn(cp*5.1)*.15;
-      c = smoothstep(.62 - uCloud*.32, .92 - uCloud*.2, c)*smoothstep(0.,.15,y);
-      vec3 cc = mix(vec3(1.), uSunCol*.6 + uSky*.6, .25)*(1. - uNight*.75)*(1. - uCloud*.35) + uNight*vec3(.05,.06,.09);
-      col = mix(col, cc, c*.9);
+      vec2 cp = d.xz/(y+.1)*1.2 + vec2(uTime*.006, uTime*.002);
+      vec2 wp = cp + vec2(vn(cp*.7+3.1), vn(cp*.7+7.3))*.6;
+      float c = vn(wp)*.5 + vn(wp*2.1)*.28 + vn(wp*4.6)*.14 + vn(wp*9.7)*.08;
+      vec2 so = normalize(uSunDir.xz + 1e-4)*.09;
+      float c2 = vn(wp+so)*.5 + vn((wp+so)*2.1)*.28 + vn((wp+so)*4.6)*.14;
+      float cov = .6 - uCloud*.3;
+      float a = smoothstep(cov, cov + .22, c)*smoothstep(0.,.12,y);
+      float lit = clamp(.65 + (c - c2)*4.5, .25, 1.15);
+      vec3 cb = mix(uHor*.75 + vec3(.06), vec3(1.), .55);
+      vec3 cc = mix(cb*vec3(.78,.82,.92), vec3(1.02,1.,.97) + uSunCol*.12, lit) * (1. - uNight*.8) * (1. - uCloud*.32) + uNight*vec3(.04,.05,.08);
+      cc += uSunCol*pow(sd, 6.)*(1.-a)*.6*(1.-uNight);
+      col = mix(col, cc, a*.95);
+      col = mix(col, uHor, smoothstep(.12,.0,y)*.35);
     }
   }
   gl_FragColor = vec4(clamp(col,0.,1.), 1.);
@@ -510,20 +547,28 @@ void main(){
   float hx = vn(p*.08 + vec2(t*.15, t*.05)) - vn(p*.08 + vec2(.5 + t*.15, t*.05));
   float hz = vn(p*.08 + vec2(t*.05, t*.13)) - vn(p*.08 + vec2(t*.05, .5 + t*.13));
   float hx2 = vn(p*.35 - vec2(t*.4, t*.2)) - vn(p*.35 + vec2(.3,0.) - vec2(t*.4, t*.2));
-  vec3 n = normalize(vec3((hx + hx2*.5)*.55, 1., (hz)*.55));
+  float hz2 = vn(p*.35 + vec2(t*.3, -t*.35)) - vn(p*.35 + vec2(0.,.3) + vec2(t*.3, -t*.35));
+  float hx3 = vn(p*1.3 + vec2(t*.9, t*.4)) - vn(p*1.3 + vec2(.25,0.) + vec2(t*.9, t*.4));
+  vec3 n = normalize(vec3((hx + hx2*.5 + hx3*.22)*.6, 1., (hz + hz2*.5)*.6));
   vec3 V = uCam - vW; float dist = length(V); V /= dist;
+  n = normalize(mix(n, vec3(0.,1.,0.), smoothstep(80.,400.,dist)*.7));
   float depth = clamp(max(vW.z - 1215., vW.x - 1215.)/90., 0., 1.);
-  vec3 deep = mix(vec3(.02,.28,.42), vec3(.0,.12,.25), depth);
-  vec3 shallow = vec3(.1,.62,.66);
-  vec3 base = mix(shallow, deep, smoothstep(.05,.6,depth));
-  float fr = .04 + .96*pow(1. - max(dot(n, V), 0.), 5.);
-  vec3 R = reflect(-V, n); vec3 env = envCol(R);
+  vec3 deep = mix(vec3(.02,.3,.46), vec3(.01,.14,.3), depth);
+  vec3 shallow = vec3(.12,.68,.7);
+  vec3 base = mix(shallow, deep, smoothstep(.03,.5,depth));
+  float fr = .03 + .97*pow(1. - max(dot(n, V), 0.), 5.);
+  vec3 R = reflect(-V, n); R.y = abs(R.y); vec3 env = envCol(R);
   float sh = shadowAt(uShM2*vec4(vW,1.));
-  vec3 col = base*(mix(uGnd,uSky,.7)*.9 + uSunCol*.35*sh);
-  col = mix(col, env, clamp(fr,0.,1.)*.85);
-  vec3 H = normalize(uSunDir + V); col += uSunCol*pow(max(dot(n,H),0.), 220.)*3.*sh;
-  float foam = smoothstep(.06,.0,depth)*(.55 + .45*sin(vW.z*.8 + vW.x*.3 - t*2.)) ;
-  col = mix(col, vec3(.95), foam*.6);
+  vec3 col = base*(mix(uGnd,uSky,.7)*.95 + uSunCol*.4*sh);
+  col += vec3(.0,.08,.07)*max(hx2+hz2,0.)*(1.-uNight);
+  col = mix(col, env, clamp(fr,0.,1.)*.8);
+  vec3 H = normalize(uSunDir + V); float sp = max(dot(n,H),0.);
+  col += uSunCol*(pow(sp, 300.)*4. + pow(sp, 40.)*.15)*sh;
+  float gl2 = step(.985, vn(p*2.2 + t*.6))*pow(sp, 12.)*(1.-uNight);
+  col += uSunCol*gl2*1.5;
+  float wv = sin(vW.z*.8 + vW.x*.3 - t*2.) * .5 + .5;
+  float foam = smoothstep(.07,.0,depth)*(.45 + .55*wv)*step(.35, vn(p*1.5 + t*.3) + .3*wv);
+  col = mix(col, vec3(.96), foam*.75);
   gl_FragColor = vec4(grade(fogit(col, vW)), 1.);
 }`;
 const VS_PART = `attribute vec3 aP; attribute vec4 aC; attribute vec4 aM; uniform mat4 uVP; uniform vec3 uR, uU; varying vec4 vC; varying vec2 vO; varying vec3 vW;
@@ -869,6 +914,12 @@ function roadLines(mb, s0, s1, c, hw, ax) {
   L(s0, s1, .22, .1, COL.yellow); L(s0, s1, -.22, .1, COL.yellow);
   L(s0, s1, hw - .5, .09, COL.line); L(s0, s1, -hw + .5, .09, COL.line);
   const lo = hw * .5; for (let s = s0 + 2; s < s1 - 3; s += 9) { L(s, s + 4, lo, .08, COL.line); L(s, s + 4, -lo, .08, COL.line); }
+  const gc = C('#30343c'), y2 = .03; const G2 = (off, w) => { if (ax === 'x') mb.quad([s0, y2, c + off + w], [s1, y2, c + off + w], [s1, y2, c + off - w], [s0, y2, c + off - w], gc, mat(.2)); else mb.quad([c + off - w, y2, s0], [c + off - w, y2, s1], [c + off + w, y2, s1], [c + off + w, y2, s0], gc, mat(.2)); };
+  G2(hw - .2, .2); G2(-hw + .2, .2);
+  // lane arrows before each end (pointing in the travel direction of the right-hand lanes)
+  if (s1 - s0 > 40) for (const [at, dir] of [[s1 - 14, 1], [s0 + 14, -1]]) for (const lk of [.27, .72]) { const off = (ax === 'x' ? dir : -dir) * hw * lk; const P = (a, o) => ax === 'x' ? [at + a * dir, .036, c + off + o] : [c + off + o, .036, at + a * dir];
+    const q2 = (A, B2, C2, D2) => { mb.quad(A, B2, C2, D2, COL.line, mat(.1)); mb.quad(D2, C2, B2, A, COL.line, mat(.1)); }; q2(P(-2.2, .12), P(.4, .12), P(.4, -.12), P(-2.2, -.12)); mb.tri(P(.4, .45), P(1.4, 0), P(.4, -.45), COL.line, mat(.1)); mb.tri(P(.4, -.45), P(1.4, 0), P(.4, .45), COL.line, mat(.1)); }
+  const R = RNG(Math.floor(s0 * 7 + c * 3)); const mh = C('#2a2d33'); for (let s = s0 + 12; s < s1 - 12; s += 37) { const o = (R() - .5) * hw; if (ax === 'x') mb.cyl(s, .025, c + o, .45, .012, 8, mh, { m: mat(.5) }); else mb.cyl(c + o, .025, s, .45, .012, 8, mh, { m: mat(.5) }); }
 }
 function laneOff(e, lane) { return lane ? e.hw * .72 : e.hw * .27; }
 function trafficLight(mb, n, e, dx, dz) {
@@ -908,12 +959,19 @@ function sidewalkRing(o, zone) {
   const lampEvery = zone === 'suburb' ? 34 : 28;
   for (let x = x0 + 8; x < x1 - 6; x += lampEvery) { addLamp(x, z0 + 1, 0); addLamp(x + lampEvery / 2, z1 - 1, PI); }
   for (let z = z0 + 14; z < z1 - 6; z += lampEvery) { addLamp(x0 + 1, z, PI / 2); addLamp(x1 - 1, z + lampEvery / 2, -PI / 2); }
+  { const ke = C('#d9d3c7'); const kq = (a, b, c2, d) => B((a + c2) / 2, (b + d) / 2).quad([a, y + .004, d], [c2, y + .004, d], [c2, y + .004, b], [a, y + .004, b], ke, mat(.08)); kq(x0, z0, x1, z0 + .3); kq(x0, z1 - .3, x1, z1); kq(x0, z0 + .3, x0 + .3, z1 - .3); kq(x1 - .3, z0 + .3, x1, z1 - .3); }
+  if (zone === 'downtown') {
+    const gr = C('#4a4640'); const tg = (x, z) => { addTree(x, z, 0, .62); D(x, z).box(x - .8, y, z - .8, x + .8, y + .03, z + .8, gr, { m: mat(.4) }); };
+    for (let x = x0 + 22; x < x1 - 10; x += 28) { tg(x, z0 + 2.2); tg(x - 14, z1 - 2.2); }
+    for (let z = z0 + 26; z < z1 - 10; z += 28) { tg(x0 + 2.2, z); tg(x1 - 2.2, z - 14); }
+  }
   if (zone === 'suburb' || zone === 'midtown' || zone === 'park') {
     for (let x = x0 + 16; x < x1 - 8; x += 22) { addTree(x, z0 + 2.2, zone === 'midtown' ? 0 : 0, .75); addTree(x + 9, z1 - 2.2, 0, .75); }
     for (let z = z0 + 22; z < z1 - 8; z += 22) { addTree(x0 + 2.2, z, 0, .75); addTree(x1 - 2.2, z + 9, 0, .75); }
   }
   const R = RNG(Math.floor(x0 * 3 + z0));
   for (let k = 0; k < 3; k++) { const x = R.range(x0 + 6, x1 - 6); bench(D(x, z0), x, y, z0 + 3.3, PI); if (R() < .5) bin(D(x, z1), x + 3, y, z1 - 3.4); if (R() < .5) hydrant(D(x0, x), x0 + 3.4, y, R.range(z0 + 6, z1 - 6)); }
+  if ((zone === 'downtown' || zone === 'midtown') && R() < .6) { const x = R.range(x0 + 20, x1 - 20), mb2 = D(x, z0); mb2.push(); mb2.xf(x, y, z0 + 3.1, PI); const fr = C('#3a4049'), gl2 = C('#9fc6dc'); for (const sx of [-1.6, 1.6]) mb2.box(sx - .05, 0, -.05, sx + .05, 2.5, .05, fr, { m: mat(.6) }); mb2.box(-1.8, 2.5, -.7, 1.8, 2.62, .5, C('#2f8fd8'), { m: mat(.4) }); mb2.box(-1.6, .6, -.62, 1.6, 2.4, -.58, gl2, { m: mat(.9, 0, 3) }); mb2.box(1.62, .6, -.6, 1.66, 2.4, .2, gl2, { m: mat(.9, 0, 3) }); mb2.box(-1.2, .42, -.5, 1.2, .5, -.15, C('#a8703f')); mb2.box(-1.7, .5, -.66, -1.65, 2.3, -.1, C('#ffd23f'), { m: [60, 2, 0, 0] }); mb2.pop(); addBox(x - 1.8, z0 + 2.5, x + 1.8, z0 + 3.8, 2.6); }
   // ped loop (sidewalk midline)
   W.peds.push({ pts: [[x0 + 2, z0 + 2], [x1 - 2, z0 + 2], [x1 - 2, z1 - 2], [x0 + 2, z1 - 2]], zone, cx: (x0 + x1) / 2, cz: (z0 + z1) / 2 });
 }
@@ -928,7 +986,7 @@ function parkingLot(mb, x0, z0, x1, z1, horiz) {
 function facadeMat(style, seed, gloss) { return [Math.round((gloss || .2) * 255), 0, 1, (style & 3) * 64 + (seed & 63)]; }
 function tower(x, z, w, d, h, R, dt) {
   const mb = B(x, z), dm = D(x, z); const col = R.pick(PAL_DT); const style = R.int(0, 3); const seed = R.int(0, 63); const fm = facadeMat(style, seed, style === 1 ? .55 : .25);
-  const plinth = mixC(col, [.25, .27, .3], .55);
+  const plinth = mixC(col, [.36, .38, .42], .45);
   mb.box(x - w / 2 - .4, .2, z - d / 2 - .4, x + w / 2 + .4, 4.2, z + d / 2 + .4, plinth, { m: facadeMat(0, seed, .5), ao: .55 });
   const kind = R();
   let top = h;
@@ -948,6 +1006,9 @@ function tower(x, z, w, d, h, R, dt) {
     mb.box(x - w / 2, 4.2, z - d / 2, x + w / 2, h * .82, z + d / 2, col, { m: fm });
     mb.taper(x, h * .82, z, w, d, h * .18, w * .35, d * .35, col, { m: fm, top: C('#dfe6ee') });
   }
+  // corner pilasters + cornice band for depth (box-type towers)
+  if (kind < .35 || h < 40 || kind >= .85) { const pc = mixC(col, [1, 1, 1], .22), th = (kind >= .85 && h >= 40) ? h * .82 : h; for (const sx of [-1, 1]) for (const sz of [-1, 1]) { const qx = x + sx * w / 2, qz = z + sz * d / 2; mb.box(qx - .45, 4.2, qz - .45, qx + .45, th + .3, qz + .45, pc, { m: mat(.2) }); }
+    mb.box(x - w / 2 - .35, 4.2, z - d / 2 - .35, x + w / 2 + .35, 4.75, z + d / 2 + .35, mixC(col, [1, 1, 1], .3), { m: mat(.2) }); }
   // rooftop details
   const ry = top; const rc = C('#8d939c');
   if (R() < .4 && kind < .7) { // helipad
@@ -984,6 +1045,9 @@ function shopBlock(x, z, w, d, floors, R, face) {
   const sc = R.pick([C('#ff4f7b'), C('#4fd1ff'), C('#ffe14f'), C('#7dff6a'), C('#ff9b3d')]);
   dm.box(-sw * .3, 4.3, 0, sw * .3, 5.3, .35, C('#2a2d35')); dm.box(-sw * .26, 4.45, .35, sw * .26, 5.15, .45, sc, { m: [60, 2, 0, 0] });
   dm.pop();
+  if (R() < .35) { const bw = Math.min(sw * .9, 9), bc = R.pick([C('#ff5d8a'), C('#2bc4ff'), C('#ffd23f'), C('#3ddc97'), C('#ff8a3d'), C('#b388ff')]); dm.push(); dm.xf(x + fx * (off - 1.5), h, z + fz * (off - 1.5), Math.atan2(fx, fz)); for (const sx of [-bw * .35, bw * .35]) dm.box(sx - .1, 0, -.1, sx + .1, 2.2, .1, C('#3a4049')); dm.box(-bw / 2, 2.2, -.15, bw / 2, 5, .05, C('#f4f4f4')); dm.box(-bw / 2 + .2, 2.4, .05, bw / 2 - .2, 4.8, .12, bc, { m: [90, 2, 0, 0] }); dm.box(-bw / 2 + .6, 3.3, .12, bw / 2 - .6, 3.9, .16, C('#ffffff'), { m: [90, 2, 0, 0] }); dm.pop(); }
+  else if (floors > 2 && R() < .6) { dm.push(); dm.xf(x + fx * off, 0, z + fz * off, Math.atan2(fx, fz)); const rc2 = C('#f4f4f4'); for (let f = 2; f < floors; f++) { const by = 1 + f * 3.6 - .2; for (let q = -1; q <= 1; q += 2) { const bx = q * sw * .25; dm.box(bx - 1.3, by, 0, bx + 1.3, by + .15, 1, mixC(col, [1, 1, 1], .4)); dm.box(bx - 1.3, by + .15, .92, bx + 1.3, by + 1, 1, rc2, { m: mat(.4) }); dm.box(bx - 1.3, by + .15, 0, bx - 1.22, by + 1, 1, rc2); dm.box(bx + 1.22, by + .15, 0, bx + 1.3, by + 1, 1, rc2); } } dm.pop(); }
+  dm.push(); dm.xf(x + fx * off, 0, z + fz * off, Math.atan2(fx, fz)); dm.box(-.8, .2, -.02, .8, 2.6, .06, C('#5b3a25'), { m: mat(.4) }); dm.box(-.7, .3, .05, .7, 2.5, .08, C('#8fc1dc'), { m: mat(.9, 2, 3) }); dm.pop();
   // rooftop AC & water tank
   for (let k = 0; k < 2; k++) dm.cbox(x + R.range(-w / 3, w / 3), h, z + R.range(-d / 3, d / 3), 1.6, 1.1, 1.6, C('#9aa0a8'), { m: mat(.3) });
   addBox(x - w / 2, z - d / 2, x + w / 2, z + d / 2, h);
@@ -1400,7 +1464,7 @@ function lights(mb, L, W, yh, yt, opt) {
 }
 function lightbar(mb, y, z, w) { mb.box(-w / 2, y, z - .15, 0, y + .16, z + .15, C('#ff2a2a'), { m: [150, 4, 0, 0] }); mb.box(0, y, z - .15, w / 2, y + .16, z + .15, C('#2a6bff'), { m: [150, 5, 0, 0] }); mb.box(-w / 2 - .02, y - .04, z - .17, w / 2 + .02, y, z + .17, C('#222')); }
 function wheelPos(id) {
-  const d = VDEF[id], L = d.L, Wd = d.W, r = d.wr; const fx = Wd / 2 - .12;
+  const d = VDEF[id], L = d.L, Wd = d.W, r = d.wr; const fx = Wd / 2 - .07;
   if (d.bike) return [[0, r, L / 2 - .35], [0, r, -L / 2 + .35]];
   if (id === 'bus') return [[fx, r, L / 2 - 2.2], [-fx, r, L / 2 - 2.2], [fx, r, -L / 2 + 2.4], [-fx, r, -L / 2 + 2.4]];
   if (id === 'fire') return [[fx, r, L / 2 - 1.6], [-fx, r, L / 2 - 1.6], [fx, r, -L / 2 + 2], [-fx, r, -L / 2 + 2], [fx, r, -L / 2 + 3.2], [-fx, r, -L / 2 + 3.2]];
@@ -1426,6 +1490,12 @@ function buildVehicle(id) {
     for (const w of wheelPos(id)) arch(w[2], d.wr);
     // side stripe / trim
     mb.box(-hw - .01, P.y0 + .02, -L / 2 + .3, -hw + .01, P.y0 + .12, L / 2 - .3, dark); mb.box(hw - .01, P.y0 + .02, -L / 2 + .3, hw + .01, P.y0 + .12, L / 2 - .3, dark);
+    // plates, grille, door seams, sills, tail light bar
+    mb.box(-.26, P.y0 + .1, -L / 2 - .1, .26, P.y0 + .3, -L / 2 - .07, C('#f4f1e6'), { m: mat(.4) }); mb.box(-.26, P.y0 + .02, L / 2 + .07, .26, P.y0 + .2, L / 2 + .1, C('#f4f1e6'), { m: mat(.4) });
+    for (let k = 0; k < 3; k++) mb.box(-Wd * .17, P.ys[P.ys.length - 1] - .3 + k * .07, L / 2 + .015, Wd * .17, P.ys[P.ys.length - 1] - .27 + k * .07, L / 2 + .035, C('#9ea6b0'), { m: mat(.9) });
+    for (const s of [-1, 1]) { mb.box(s * hw - .012, P.y0 + .15, zf - .55, s * hw + .012, yb - .02, zf - .52, dark); mb.box(s * hw - .012, P.y0 + .15, (zr + zf) / 2 - .03, s * hw + .012, yb - .02, (zr + zf) / 2, dark); mb.box(s * hw - .02, P.y0 - .04, -L / 2 + .55, s * hw + .02, P.y0 + .04, L / 2 - .55, C('#1b1d21')); mb.box(s * (hw - .2) - .1, yb - .25, zf - .62, s * (hw - .2) + .1, yb - .21, zf - .55, C('#cfd5dd'), { m: mat(.9) }); }
+    mb.box(-Wd * .16, P.ys[0] - .2, -L / 2 - .025, Wd * .16, P.ys[0] - .12, -L / 2 + .01, C('#a3131a'), { m: [160, 3, 0, 0] });
+    if (id !== 'suv') mb.box(Wd * .26, P.y0 - .02, -L / 2 - .12, Wd * .34, P.y0 + .06, -L / 2 + .1, C('#8a9099'), { m: mat(.8) });
     // mirrors
     for (const s of [-1, 1]) mb.box(s * hw - .02, yb + .05, zf - .25, s * (hw + .16), yb + .2, zf - .1, body, { m: PAINT });
     if (id === 'taxi') { mb.box(-.4, yr, -.25, .4, yr + .26, .25, C('#fff4b8'), { m: [80, 2, 0, 0] }); for (let k = -3; k < 3; k++) for (const s of [-1, 1]) mb.box(s * hw - .012 * s, .62, k * .3, s * (hw + .012), .74, k * .3 + .15, C('#1d1d1d')); }
@@ -1475,26 +1545,37 @@ function buildVehicle(id) {
   }
   return mb;
 }
-function buildWheel() { const mb = new MB(); mb.cylX(0, 0, 0, 1, .62, 12, C('#202226'), { cap: C('#c5cbd3'), ri: .62, mc: mat(.85) }); mb.box(-.33, -.12, -.5, .33, .12, .5, C('#9aa1aa'), { m: mat(.8) }); return mb; }
+function buildWheel() { const mb = new MB(); const tyre = C('#1d1f23');
+  mb.cylX(0, 0, 0, 1, .72, 14, tyre, { cap: C('#2a2c31'), ri: 1, mc: mat(.15) });
+  mb.cylX(0, 0, 0, .66, .76, 14, C('#cfd5dd'), { cap: C('#d9dee5'), ri: .66, mc: mat(.9) });
+  mb.cylX(0, 0, 0, .5, .8, 10, C('#8e959f'), { cap: C('#5c636d'), ri: .5, mc: mat(.6) });
+  for (let k = 0; k < 5; k++) { const a = k / 5 * TAU; mb.push(); mb.xfm([1, 0, 0, 0, Math.cos(a), Math.sin(a), 0, -Math.sin(a), Math.cos(a), 0, 0, 0]); for (const sx of [-1, 1]) mb.box(sx * .4 - .02, -.07, .1, sx * .4 + .02, .07, .62, C('#e3e7ec'), { m: mat(.9) }); mb.pop(); }
+  mb.cylX(0, 0, 0, .16, .86, 8, C('#f0f2f5'), { m: mat(.95) });
+  return mb; }
 // ---------- characters (bones encoded in mat.z = 10+bone; slots: 1 shirt 2 pants 3 skin 4 hair) ----------
 function buildChar(hair) {
   const mb = new MB(); const W = [1, 1, 1];
   const S1 = (b) => [30, 0, 10 + b, 1], S2 = (b) => [20, 0, 10 + b, 2], S3 = (b) => [40, 0, 10 + b, 3], S4 = (b) => [60, 0, 10 + b, 4], DK = (b) => [30, 0, 10 + b, 0];
-  // legs (3 = left +x, 4 = right -x)
-  for (const [b, s] of [[3, 1], [4, -1]]) { mb.box(s * .04, .1, -.1, s * .2, .88, .1, W, { m: S2(b) }); mb.box(s * .03, 0, -.13, s * .21, .12, .17, C('#2b2b30'), { m: DK(b) }); }
-  // torso + hips
-  mb.box(-.23, .82, -.13, .23, 1.0, .13, W, { m: S2(0) });
-  mb.taper(0, .98, 0, .5, .28, .46, .56, .3, W, { m: S1(0) });
-  // arms (1 left +x, 2 right -x)
-  for (const [b, s] of [[1, 1], [2, -1]]) { mb.box(s * .27, 1.06, -.08, s * .4, 1.42, .08, W, { m: S1(b) }); mb.box(s * .28, .82, -.07, s * .39, 1.07, .07, W, { m: S3(b) }); }
-  // neck + head
-  mb.box(-.07, 1.43, -.06, .07, 1.5, .06, W, { m: S3(0) });
-  mb.box(-.17, 1.49, -.16, .17, 1.84, .17, W, { m: S3(0) });
-  mb.box(-.11, 1.64, .17, -.05, 1.71, .18, C('#1d1d1d'), { m: DK(0) }); mb.box(.05, 1.64, .17, .11, 1.71, .18, C('#1d1d1d'), { m: DK(0) });
-  mb.box(-.06, 1.55, .17, .06, 1.575, .18, C('#b0574a'), { m: DK(0) });
-  if (hair === 0) { mb.box(-.185, 1.76, -.18, .185, 1.9, .18, W, { m: S4(0) }); mb.box(-.185, 1.55, -.18, .185, 1.78, -.1, W, { m: S4(0) }); }
-  else if (hair === 1) { mb.box(-.19, 1.74, -.19, .19, 1.9, .19, W, { m: S4(0) }); mb.box(-.19, 1.3, -.2, .19, 1.76, -.08, W, { m: S4(0) }); mb.box(-.19, 1.5, -.12, -.15, 1.76, .1, W, { m: S4(0) }); mb.box(.15, 1.5, -.12, .19, 1.76, .1, W, { m: S4(0) }); }
-  else { mb.box(-.19, 1.78, -.19, .19, 1.95, .19, W, { m: S4(0) }); mb.box(-.19, 1.78, .1, .19, 1.82, .36, W, { m: S4(0) }); mb.box(-.185, 1.56, -.18, .185, 1.78, -.12, C('#3a2a20'), { m: DK(0) }); }
+  const shoe = C('#2b2d33'), sole = C('#f2f2f2');
+  // legs (3 = left +x, 4 = right -x): tapered trousers + trainers with white soles
+  for (const [b, s] of [[3, 1], [4, -1]]) { mb.taper(s * .125, .14, 0, .17, .21, .76, .19, .23, W, { m: S2(b) }); mb.box(s * .03, .0, -.12, s * .22, .07, .2, sole, { m: DK(b) }); mb.box(s * .035, .06, -.11, s * .215, .17, .17, shoe, { m: DK(b) }); mb.box(s * .05, .1, .17, s * .2, .15, .2, sole, { m: DK(b) }); }
+  // hips, belt, torso (tapered), collar
+  mb.box(-.23, .84, -.13, .23, .98, .13, W, { m: S2(0) }); mb.box(-.235, .95, -.135, .235, 1.0, .135, C('#3a2e26'), { m: DK(0) }); mb.box(-.04, .955, .134, .04, .995, .14, C('#d8c27a'), { m: [120, 0, 10, 0] });
+  mb.taper(0, .99, 0, .47, .27, .44, .56, .3, W, { m: S1(0) });
+  mb.taper(0, 1.42, 0, .3, .2, .05, .2, .16, W, { m: S1(0) });
+  mb.box(-.12, 1.36, .12, .12, 1.43, .155, mulC(W, .82), { m: S1(0) });
+  // arms (1 left +x, 2 right -x): sleeve, forearm, hand
+  for (const [b, s] of [[1, 1], [2, -1]]) { mb.taper(s * .335, 1.12, 0, .15, .17, .31, .17, .19, W, { m: S1(b) }); mb.box(s * .275, .86, -.065, s * .39, 1.13, .065, W, { m: S3(b) }); mb.box(s * .27, .76, -.075, s * .395, .87, .075, W, { m: S3(b) }); }
+  // neck + head (slightly tapered, with ears and a friendly face)
+  mb.box(-.07, 1.43, -.06, .07, 1.51, .06, W, { m: S3(0) });
+  mb.taper(0, 1.49, 0, .32, .31, .37, .36, .35, W, { m: S3(0) });
+  for (const s of [-1, 1]) mb.box(s * .175, 1.6, -.03, s * .21, 1.7, .05, W, { m: S3(0) });
+  for (const s of [-1, 1]) { mb.box(s * .045, 1.63, .171, s * .12, 1.71, .178, C('#ffffff'), { m: DK(0) }); mb.box(s * .065, 1.635, .176, s * .11, 1.695, .184, C('#1d1d1d'), { m: DK(0) }); mb.box(s * .04, 1.735, .171, s * .125, 1.755, .18, C('#3a2a20'), { m: DK(0) }); }
+  mb.box(-.07, 1.555, .171, .07, 1.575, .179, C('#9c3f36'), { m: DK(0) }); mb.box(-.085, 1.57, .171, -.06, 1.59, .179, C('#9c3f36'), { m: DK(0) }); mb.box(.06, 1.57, .171, .085, 1.59, .179, C('#9c3f36'), { m: DK(0) });
+  mb.box(-.02, 1.6, .17, .02, 1.66, .2, W, { m: S3(0) });
+  if (hair === 0) { mb.box(-.19, 1.78, -.19, .19, 1.92, .19, W, { m: S4(0) }); mb.box(-.19, 1.55, -.19, .19, 1.8, -.1, W, { m: S4(0) }); mb.box(-.19, 1.68, -.12, -.16, 1.8, .12, W, { m: S4(0) }); mb.box(.16, 1.68, -.12, .19, 1.8, .12, W, { m: S4(0) }); mb.box(-.17, 1.8, .14, .1, 1.86, .21, W, { m: S4(0) }); }
+  else if (hair === 1) { mb.box(-.2, 1.76, -.2, .2, 1.92, .2, W, { m: S4(0) }); mb.box(-.2, 1.28, -.21, .2, 1.78, -.08, W, { m: S4(0) }); mb.box(-.2, 1.46, -.12, -.16, 1.78, .12, W, { m: S4(0) }); mb.box(.16, 1.46, -.12, .2, 1.78, .12, W, { m: S4(0) }); mb.box(-.18, 1.78, .16, .18, 1.84, .21, W, { m: S4(0) }); }
+  else { mb.box(-.2, 1.8, -.2, .2, 1.96, .2, W, { m: S4(0) }); mb.box(-.2, 1.8, .12, .2, 1.85, .38, W, { m: S4(0) }); mb.box(-.19, 1.56, -.19, .19, 1.8, -.12, C('#3a2a20'), { m: DK(0) }); }
   return mb;
 }
 // ---------- trees ----------
@@ -1981,6 +2062,7 @@ function computeLight() {
   const wx = WX[G.wx.type], k = G.wx.amt; const cloud = lerp(WX[0].cloud, wx.cloud, k);
   const grey = dot3(L.hor, [.3, .5, .2]);
   if (cloud > .3) { const c = (cloud - .3) / .7; L.sun = mulC(L.sun, 1 - c * .55); L.zen = mixC(L.zen, mulC([grey, grey, grey * 1.05], .9), c * .7); L.hor = mixC(L.hor, [grey, grey, grey * 1.03], c * .6); L.sky = mulC(L.sky, 1 + c * .15); }
+  if (WX[G.wx.type].rain) { const r = k; L.sun = mulC(L.sun, 1 - r * .25); L.sky = mulC(L.sky, 1 - r * .12); L.hor = mixC(L.hor, [.55, .6, .66], r * .5 * (1 - L.night)); L.zen = mixC(L.zen, [.42, .47, .55], r * .6 * (1 - L.night)); }
   L.cloud = cloud; L.fogD = (1.6 / (G.cam ? G.cam.far : 800)) * lerp(1, wx.fog, k); L.fog = mixC(L.hor, L.zen, .15);
   L.wet = WX[G.wx.type].rain ? k : Math.max(0, (L.wet || 0) - .0005); L.rain = WX[G.wx.type].rain ? k : 0;
   L.sunVis = smooth(0, .12, sy) * (1 - Math.max(0, cloud - .5));
@@ -2026,7 +2108,7 @@ function renderFrame() {
   gl.useProgram(P.sky.p); const su = P.sky.u; gl.uniformMatrix4fv(su.uIVP, false, R.ivp); gl.uniform3fv(su.uSunDir, L.sunDir); gl.uniform3fv(su.uSunCol, mulC(L.sun, L.sunVis * .8 + .2)); gl.uniform3fv(su.uSky, L.zen); gl.uniform3fv(su.uHor, L.hor); gl.uniform3f(su.uCam, c.x, c.y, c.z); gl.uniform1f(su.uNight, L.night); gl.uniform1f(su.uTime, G.t); gl.uniform1f(su.uCloud, L.cloud); gl.uniform1f(su.uQ, R.clouds ? 1 : 0);
   gl.depthFunc(gl.LEQUAL); gl.bindBuffer(gl.ARRAY_BUFFER, GLX.quadBuf); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 8, 0); gl.drawArrays(gl.TRIANGLES, 0, 3); gl.depthFunc(gl.LESS); DRAWS++;
   // transparent: glow (additive) + particles
-  drawGlows(); drawParticles();
+  drawDecals(); drawGlows(); drawParticles();
 }
 function shadowPass() {
   const L = R.light, c = G.cam, P = G.P; const S = R.shArea; const fx = Math.sin(c.yaw), fz = Math.cos(c.yaw);
@@ -2099,11 +2181,30 @@ function glowBeam(x, y0, z, r, h, col, a) {
   for (let k = 0; k < 4; k++) { const q = o + k * 11; d[q] = P[k][0]; d[q + 1] = P[k][1]; d[q + 2] = P[k][2]; d[q + 3] = col[0]; d[q + 4] = col[1]; d[q + 5] = col[2]; d[q + 6] = a; d[q + 7] = U[k][0] * .9; d[q + 8] = U[k][1]; d[q + 9] = 0; d[q + 10] = 0; }
   GN++;
 }
+function glowSprite(x, y, z, r, col, a) { const v = G.cam.view; const rx = v[0] * r, ry = v[4] * r, rz = v[8] * r, ux = v[1] * r, uy = v[5] * r, uz = v[9] * r; glowQuad([x - rx - ux, y - ry - uy, z - rz - uz], [x + rx - ux, y + ry - uy, z + rz - uz], [x + rx + ux, y + ry + uy, z + rz + uz], [x - rx + ux, y - ry + uy, z - rz + uz], col, a); }
+// soft contact shadows (multiplicative darkening): ambient-occlusion style grounding for cars, trees, people and poles
+function drawDecals() {
+  GN = 0; if (G.quality === 'low') return; const c = G.cam, L = R.light; const k = .55 + .2 * (1 - L.sunVis);
+  for (const v of G.vehicles) { const d = dist2(v.x, v.z, c.x, c.z); if (d > 110 * 110) continue; if (!sphereVisible(c.planes, v.x, v.y, v.z, v.d.L)) continue; const f = vFwd(v); const hl = v.d.L * .62, hw = v.d.W * .78; const fx = f[0] * hl, fz = f[1] * hl, rx = f[1] * hw, rz = -f[0] * hw; const y = v.y + .06;
+    glowQuad([v.x - fx - rx, y, v.z - fz - rz], [v.x - fx + rx, y, v.z - fz + rz], [v.x + fx + rx, y, v.z + fz + rz], [v.x + fx - rx, y, v.z + fz - rz], [k, k, k], 1); }
+  for (const p of G.peds) { const d = dist2(p.x, p.z, c.x, c.z); if (d > 60 * 60) continue; glowDisc(p.x, p.y + .03, p.z, .75, [k, k, k], .8); }
+  const P = G.P; if (P.mode === 'foot' && !P.hidden) glowDisc(P.x, P.y + .03, P.z, .8, [k, k, k], .9);
+  for (const ch of W.chunks) { const b = ch.bb; const dx = Math.max(b[0] - c.x, 0, c.x - b[3]), dz = Math.max(b[2] - c.z, 0, c.z - b[5]); if (Math.hypot(dx, dz) > 90) continue;
+    for (const t of ch.trees) { if (dist2(t.x, t.z, c.x, c.z) > 90 * 90) continue; glowDisc(t.x, t.y + .03, t.z, (t.t === 3 ? 1.5 : 2.6) * t.s, [k * .8, k * .8, k * .8], .8); }
+    for (const l of ch.lamps) { if (dist2(l.x, l.z, c.x, c.z) > 60 * 60) continue; glowDisc(l.x, l.y + .03, l.z, .5, [k, k, k], .9); } }
+  if (!GN) return;
+  const p = GLX.progs.glow; gl.useProgram(p.p); gl.uniformMatrix4fv(p.u.uVP, false, c.vp); gl.uniform1f(p.u.uK, 1);
+  gl.enable(gl.BLEND); gl.blendFunc(gl.ZERO, gl.ONE_MINUS_SRC_COLOR); gl.depthMask(false); gl.disable(gl.CULL_FACE);
+  gl.enable(gl.POLYGON_OFFSET_FILL); gl.polygonOffset(-2, -2);
+  bindPartBuf(R.glowBuf, R.glowData, GN); gl.drawElements(gl.TRIANGLES, GN * 6, gl.UNSIGNED_SHORT, 0); DRAWS++;
+  gl.disable(gl.POLYGON_OFFSET_FILL); gl.depthMask(true); gl.disable(gl.BLEND); gl.enable(gl.CULL_FACE);
+}
 function drawGlows() {
   GN = 0; const L = R.light, c = G.cam;
   // lamp pools & heads at night
   if (L.night > .2) {
-    const k = L.night; for (const lp of W.lampPos) { const d = dist2(lp[0], lp[1], c.x, c.z); if (d > 200 * 200) continue; if (!sphereVisible(c.planes, lp[0], 2, lp[1], 8)) continue; glowDisc(lp[0], .26, lp[1], 7, [1, .78, .45], .55 * k); }
+    const k = L.night; for (const ch of W.chunks) { const b = ch.bb; const dx = Math.max(b[0] - c.x, 0, c.x - b[3]), dz = Math.max(b[2] - c.z, 0, c.z - b[5]); if (Math.hypot(dx, dz) > 240) continue; for (const l of ch.lamps) { const d = dist2(l.x, l.z, c.x, c.z); if (d > 240 * 240) continue; const hx = l.x + Math.sin(l.yaw) * 2, hz = l.z + Math.cos(l.yaw) * 2; if (!sphereVisible(c.planes, hx, 3, hz, 9)) continue; glowDisc(hx, l.y + .07, hz, 8.5, [1, .74, .42], .62 * k); glowDisc(hx, l.y + .08, hz, 3.5, [1, .85, .6], .35 * k); glowSprite(hx, l.y + 6.4, hz, 1.4, [1, .85, .6], .9 * k); if (d < 120 * 120) glowBeam(hx, l.y + .3, hz, 1.6, 6, [1, .82, .55], .07 * k); } }
+    for (const v of G.vehicles) { const d = dist2(v.x, v.z, c.x, c.z); if (d > 160 * 160 || (v.mode === 'parked' && v !== G.P.veh)) continue; const f = vFwd(v), rx = f[1], rz = -f[0], hL = v.d.L / 2, w = v.d.W * .32, y = v.y + .62; for (const s of [-1, 1]) { glowSprite(v.x + f[0] * (hL + .1) + rx * w * s, y, v.z + f[1] * (hL + .1) + rz * w * s, .9, [1, .95, .82], .85 * k); glowSprite(v.x - f[0] * (hL + .1) + rx * w * s, y + .1, v.z - f[1] * (hL + .1) + rz * w * s, v.brake ? .8 : .5, [1, .15, .1], (v.brake ? .9 : .5) * k); } }
     // vehicle headlight pools
     for (const v of G.vehicles) { const d = dist2(v.x, v.z, c.x, c.z); if (d > 150 * 150 || v.mode === 'parked') continue; const f = vFwd(v); const x = v.x + f[0] * (v.d.L / 2 + 5), z = v.z + f[1] * (v.d.L / 2 + 5); glowDisc(x, v.y + .08, z, 4.5, [1, .92, .75], .5 * k); }
     if (W.lighthouse) { const [x, y, z] = W.lighthouse; const a = G.t * 1.2; for (const s of [0, PI]) { const ex = x + Math.cos(a + s) * 120, ez = z + Math.sin(a + s) * 120; glowQuad([x, y + .5, z], [x, y - .5, z], [ex, y - 8, ez], [ex, y + 8, ez], [1, .95, .7], .12 * k); } }
@@ -2114,8 +2215,12 @@ function drawGlows() {
   for (const s of W.stars) { if (SAVE.stars.includes(s.id)) continue; const d = dist2(s.x, s.z, c.x, c.z); if (d > 160 * 160) continue; glowBeam(s.x, s.y - 1, s.z, 1.2, 4, [1, .85, .3], .35); }
   // rain streaks
   if (L.rain > .05) {
-    const n = Math.floor(600 * L.rain * (G.quality === 'low' ? .4 : 1)); const cx = c.x, cy = c.y, cz = c.z; const rx = Math.cos(c.yaw) * .025, rz = -Math.sin(c.yaw) * .025;
-    for (let i = 0; i < n; i++) { const h1 = hash1(i * 7 + 1), h2 = hash1(i * 13 + 5), h3 = hash1(i * 3 + 11); const x = cx + (h1 - .5) * 50 + Math.sin(c.yaw) * 18, z = cz + (h2 - .5) * 50 + Math.cos(c.yaw) * 18; const y = cy + 18 - ((G.t * 26 + h3 * 40) % 40); glowQuad([x - rx, y, z - rz], [x + rx, y, z + rz], [x + rx - .15, y - 1.3, z + rz], [x - rx - .15, y - 1.3, z - rz], [.6, .7, .85], .35); }
+    const n = Math.floor(1900 * L.rain * (G.quality === 'low' ? .35 : G.quality === 'mid' ? .7 : 1)); const cx = c.x, cy = c.y, cz = c.z; const rx = Math.cos(c.yaw) * .045, rz = -Math.sin(c.yaw) * .045; const sx = Math.sin(c.yaw), sz = Math.cos(c.yaw);
+    const rc = L.night > .5 ? [.5, .55, .7] : [.75, .8, .9];
+    for (let i = 0; i < n; i++) { const h1 = hash1(i * 7 + 1), h2 = hash1(i * 13 + 5), h3 = hash1(i * 3 + 11); const rr = 3 + h1 * h1 * 24, aa = h2 * TAU; const x = cx + Math.cos(aa) * rr + sx * 7, z = cz + Math.sin(aa) * rr + sz * 7; const y = cy + 9 - ((G.t * 28 + h3 * 22) % 22); const ln = .7 + h3 * .7; const w = .022 + rr * .003;
+      if (GN >= 2900) break; const d = R.glowData, o = GN * 44; const P = [[x - rx * w / .045, y, z - rz * w / .045], [x + rx * w / .045, y, z + rz * w / .045], [x + rx * w / .045 - .22, y - ln, z + rz * w / .045 - .08], [x - rx * w / .045 - .22, y - ln, z - rz * w / .045 - .08]], U = [[-1, .2], [1, .2], [1, 0], [-1, 0]];
+      for (let q = 0; q < 4; q++) { const b = o + q * 11; d[b] = P[q][0]; d[b + 1] = P[q][1]; d[b + 2] = P[q][2]; d[b + 3] = rc[0]; d[b + 4] = rc[1]; d[b + 5] = rc[2]; d[b + 6] = .38; d[b + 7] = U[q][0]; d[b + 8] = U[q][1]; d[b + 9] = 0; d[b + 10] = 0; } GN++; }
+    const ns = Math.floor(160 * L.rain * (G.quality === 'low' ? .3 : 1)); for (let i = 0; i < ns; i++) { const ph = (G.t * 3 + hash1(i * 5 + 2)) % 1, cyc = Math.floor(G.t * 3 + hash1(i * 5 + 2)); const h1 = hash1(i * 11 + cyc * 17), h2 = hash1(i * 19 + cyc * 31); const x = cx + sx * 14 + (h1 - .5) * 36, z = cz + sz * 14 + (h2 - .5) * 36; glowDisc(x, groundH(x, z) + .05, z, .15 + ph * .45, rc, .5 * (1 - ph)); }
   }
   for (const f of G.glowFx || []) glowDisc(f.x, f.y, f.z, f.r, f.c, f.a);
   if (!GN) return;
