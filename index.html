@@ -2495,7 +2495,7 @@ const S = {
   },
   goto(x, z, text, o) {
     o = o || {}; const r = o.r || 7;
-    return { tgt: [x, z], start(m) { if (o.time) m.timer = (m.timer || 0) + o.time; m.arr = 0; }, update(m, dt) { if (o.foot && G.P.mode !== 'foot') return false; if (near(x, z, r) && (!o.stop || pSpeed() < 2.5)) { m.arr += dt; return m.arr > (o.hold || 0); } m.arr = 0; return false; }, text, beams: () => [beam(x, z, o.col)], stopHint: o.stop };
+    return { tgt: [x, z], start(m) { if (o.time) m.timer = (m.timer || 0) + o.time; m.arr = 0; }, update(m, dt) { if (o.carDone && G.P.mode === 'car' && pVeh()) return true; if (o.foot && G.P.mode !== 'foot') return false; if (near(x, z, r) && (!o.stop || pSpeed() < 2.5)) { m.arr += dt; return m.arr > (o.hold || 0); } m.arr = 0; return false; }, text, beams: () => [beam(x, z, o.col)], stopHint: o.stop };
   },
   pickup(x, z, text, look, o) {
     o = o || {};
@@ -2644,7 +2644,7 @@ function raceRoute(pts) { const ids = []; for (let k = 0; k < pts.length - 1; k+
 function DL(who, text) { return { who, text }; }
 const STORY = [
   { id: 's01', title: 'Welcome to Zaib City', giver: 'mayor', at: [214, 889], reward: 300, xp: 120, intro: [DL('mayor', 'Hello and welcome to Zaib City! I\'m Mayor Sunny. Everyone here shares, helps and waves hello.'), DL('mayor', 'Folks happily lend their cars, so just ask nicely! Hop into that little hatchback and swing by City Hall downtown.')],
-    steps: () => [S.goto(...SP('home0c'), 'Walk to the hatchback and {CAR}', { foot: 1, r: 4 }), S.vehicle(['hatch', 'taxi', 'sports', 'suv', 'pickup', 'muscle', 'super'], 'car'), S.goto(600, 404, 'Drive to City Hall (follow the GPS line)', { stop: 1, r: 10 })], outro: [DL('mayor', 'You made it! Lovely driving. Here\'s a little welcome gift. Check your phone for jobs any time!')] },
+    steps: () => [S.goto(...SP('home0c'), 'Walk to the hatchback and {CAR}', { foot: 1, r: 4, carDone: 1 }), S.vehicle(Object.keys(VDEF), 'car'), S.goto(600, 404, 'Drive to City Hall (follow the GPS line)', { stop: 1, r: 10 })], outro: [DL('mayor', 'You made it! Lovely driving. Here\'s a little welcome gift. Check your phone for jobs any time!')] },
   { id: 's02', title: 'Hot Delivery', giver: 'chef', at: 'pizza', reward: 400, xp: 120, intro: [DL('chef', 'Mamma mia, a new face! My delivery rider has the hiccups. Can you deliver two pizzas while they\'re hot?')],
     steps: () => { const a = randomCurb(...SP('pizza'), 200, 400, zoneFilter(['midtown', 'suburb'])), b = randomCurb(a.x, a.z, 200, 400, zoneFilter(['midtown', 'suburb', 'downtown'])); return [S.vehicle(['scooter']), S.goto(a.x, a.z, 'Deliver pizza #1 🍕', { stop: 1, time: 70 }), S.goto(b.x, b.z, 'Deliver pizza #2 🍕', { stop: 1, time: 50 })]; }, outro: [DL('chef', 'Bellissimo! The customers say the pizza was still steaming. Come back for more deliveries any time!')] },
   { id: 's03', title: 'Tune-Up Time', giver: 'mech', at: 'garage1', reward: 450, xp: 130, intro: [DL('mech', 'Name\'s Sprocket. I fix things! Bring me a car, any car, and I\'ll show you my garage.'), DL('mech', 'Then show me some style: {DRIFT} while turning to drift. Easy does it!')],
@@ -2820,7 +2820,8 @@ function drawOverlay() {
 }
 function roundRect(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
 // ---------- toasts / banners ----------
-function toast(t, dur) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = ctlTxt(t); const box = $('toasts'); box.appendChild(el); while (box.children.length > 3) box.firstChild.remove(); setTimeout(() => el.remove(), (dur || 2.4) * 1000); }
+function tutCoachOn() { return !!(G.tutorial && G.mission && G.mission.def.id === 's01' && G.mission.i <= 3); }
+function toast(t, dur) { t = ctlTxt(t); if (tutCoachOn()) { const ot = $('objT').textContent; if (t && t !== ot && !(G.coach && G.coach.t === t && G.coach.until > performance.now())) G.coach = { t, until: performance.now() + (dur || 2.4) * 1000 }; return; } const box0 = $('toasts'); for (const c of box0.children) if (c.textContent === t) return; const el = document.createElement('div'); el.className = 'toast'; el.textContent = ctlTxt(t); const box = $('toasts'); box.appendChild(el); while (box.children.length > 3) box.firstChild.remove(); setTimeout(() => el.remove(), (dur || 2.4) * 1000); }
 let bannerQ = [], bannerBusy = 0;
 function banner(t, s) { bannerQ.push([t, s]); if (!bannerBusy) nextBanner(); }
 function nextBanner() { const b = bannerQ.shift(); if (!b) { bannerBusy = 0; return; } bannerBusy = 1; const el = $('banner'); el.querySelector('.t').textContent = b[0]; el.querySelector('.s').textContent = b[1] || ''; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); setTimeout(nextBanner, 2300); }
@@ -3227,8 +3228,9 @@ function tutorialHints() {
   if (!G.tutorial || !G.mission || G.mission.def.id !== 's01' || G.dialog || G.screen) { if (tutEl) { tutEl.remove(); tutEl = null; } return; }
   const i = G.mission.i; const T = IS_TOUCH_UI(); let t = '';
   if (i === 1) t = T ? '👈 Use the left stick to walk to the car · drag the screen to look' : 'WASD to walk · drag the mouse to look'; else if (i === 2) t = T ? 'Tap the 🚗 car button next to the car' : 'Press E or Enter next to the car'; else if (i === 3) t = G.mission.t < 30 && pSpeed() < 12 ? (T ? 'Hold GAS ▲ · steer with ◀ ▶ · follow the pink GPS line' : 'W to drive · A/D to steer · follow the pink GPS line') : '';
+  if (i === 2 && G.P.mode === 'car') t = ''; const C2 = G.coach; if (C2 && C2.until > performance.now()) t = C2.t; else G.coach = null; if (t && t === $('objT').textContent) t = '';
   if (!t) { if (tutEl) { tutEl.remove(); tutEl = null; } return; }
-  if (!tutEl) { tutEl = document.createElement('div'); tutEl.className = 'tutHint'; tutEl.style.animation = 'none'; document.body.appendChild(tutEl); } if (tutEl.textContent !== t) tutEl.textContent = t; layoutHUD(true); const F = G.hudFree; if (F) { const tb = $('toasts').getBoundingClientRect(); const ob = $('obj'); const top = Math.max(F.top, vis(ob) ? ob.getBoundingClientRect().bottom + 8 : 0, $('toasts').children.length ? tb.bottom + 6 : 0); tutEl.style.top = top + 'px'; tutEl.style.left = F.cx + 'px'; tutEl.style.maxWidth = Math.min(F.mw, innerWidth * .9) + 'px'; tutEl.style.transform = 'translateX(-50%)'; } else tutEl.style.top = '40%'; tutEl.style.fontSize = i === 3 || innerHeight < 500 ? '14px' : '';
+  if (!tutEl) { tutEl = document.createElement('div'); tutEl.className = 'tutHint'; tutEl.style.animation = 'none'; document.body.appendChild(tutEl); } if (tutEl.textContent !== t) tutEl.textContent = t; layoutHUD(true); const F = G.hudFree; if (F) { const tb = $('toasts').getBoundingClientRect(); const ob = $('obj'); const top = Math.max(F.top, vis(ob) ? ob.getBoundingClientRect().bottom + 8 : 0, $('toasts').children.length ? tb.bottom + 6 : 0); tutEl.style.top = top + 'px'; tutEl.style.left = F.cx + 'px'; tutEl.style.maxWidth = Math.min(F.mw, innerWidth * .9) + 'px'; tutEl.style.transform = 'translateX(-50%)'; } else tutEl.style.top = '40%'; tutEl.style.fontSize = innerHeight > innerWidth || innerHeight < 500 ? '14px' : ''; tutEl.style.padding = innerHeight > innerWidth || innerHeight < 500 ? '8px 14px' : '';
 }
 // ---------- weather / time ----------
 function timeWeather(dt) {
@@ -3305,7 +3307,7 @@ function init() {
     requestAnimationFrame(frame);
   }, 30);
 }
-window.__zc = { G, W, SAVE: () => SAVE, INP, KEYS, BTN, JOBS, STORY, startMission, openStory, enterVehicle, exitVehicle, nearestEnterable, setQuality, makeVehicle, pVeh, pPos, missionTarget, completeMission, curStep, nextStep, S, route, R };
+window.__zc = { toast, G, W, SAVE: () => SAVE, INP, KEYS, BTN, JOBS, STORY, startMission, openStory, enterVehicle, exitVehicle, nearestEnterable, setQuality, makeVehicle, pVeh, pPos, missionTarget, completeMission, curStep, nextStep, S, route, R };
 init();
 </script>
 </body></html>
