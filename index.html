@@ -10,10 +10,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#1b2a4a">
 <title>Zaib City by Zaib - Open-World City Driving Adventure</title>
+<meta name="apple-mobile-web-app-title" content="Zaib City">
 <link rel="manifest" href="/zaib-city/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/zaib-city/icons/apple-touch-icon.png">
 <script id="zg-sw">if("serviceWorker"in navigator)addEventListener("load",function(){navigator.serviceWorker.register("/zaib-city/sw.js",{scope:"/zaib-city/"}).catch(function(){})});</script>
-<meta name="apple-mobile-web-app-title" content="Zaib City">
 <meta name="description" content="Zaib City by Zaib is a family-friendly 3D open-world city game for your phone and browser. Drive 14 vehicles, borrow cars from friendly locals, run taxi, pizza, ambulance, fire and police jobs, race, jump ramps, buy houses and play a 22-mission story.">
 <link rel="canonical" href="https://zaibgames.com/zaib-city/">
 <meta property="og:type" content="website">
@@ -128,7 +128,7 @@ body.steer-tilt #bL,body.steer-tilt #bR{display:none}
 body.steer-stick.car #joyZone{display:block!important}body.steer-stick.car #bL,body.steer-stick.car #bR{display:none}
 body.lefty #bGas{right:auto;left:calc(var(--sal) + 18px)}body.lefty #bBrake{right:auto;left:calc(var(--sal) + 124px)}body.lefty #bNitro{right:auto;left:calc(var(--sal) + 30px)}body.lefty #bHand{right:auto;left:calc(var(--sal) + 112px)}body.lefty #bHorn{right:auto;left:calc(var(--sal) + 186px)}
 body.lefty #bL{left:auto;right:calc(var(--sar) + 114px)}body.lefty #bR{left:auto;right:calc(var(--sar) + 18px)}
-@media (orientation:portrait){#bGas{width:84px;height:84px}#bBrake{width:64px;height:64px;right:calc(var(--sar) + 106px)}#bL,#bR{width:72px;height:72px}#bR{left:calc(var(--sal) + 98px)}#bHand{right:calc(var(--sar) + 96px);bottom:calc(var(--sab) + 92px);width:56px;height:56px}#bNitro{bottom:calc(var(--sab) + 118px);width:56px;height:56px}#bHorn{right:calc(var(--sar) + 22px);bottom:calc(var(--sab) + 184px);width:44px;height:44px}#bSiren{right:calc(var(--sar) + 76px);bottom:calc(var(--sab) + 160px)}body.car #bEnter{bottom:calc(var(--sab) + 236px)}#bSpray{right:calc(var(--sar) + 20px);bottom:calc(var(--sab) + 290px)}#speedo{bottom:calc(var(--sab) + 112px)}#prompt{bottom:calc(var(--sab) + 200px)}#obj{max-width:calc(100vw - 150px);top:calc(var(--sat) + 150px)}#toasts{top:calc(var(--sat) + 220px)}#hudTR{max-width:104px}}
+@media (orientation:portrait){#bGas{width:84px;height:84px}#bBrake{width:64px;height:64px;right:calc(var(--sar) + 106px)}#bL,#bR{width:72px;height:72px}#bR{left:calc(var(--sal) + 98px)}#bHand{right:calc(var(--sar) + 96px);bottom:calc(var(--sab) + 92px);width:56px;height:56px}#bNitro{bottom:calc(var(--sab) + 118px);width:56px;height:56px}#bHorn{right:calc(var(--sar) + 22px);bottom:calc(var(--sab) + 184px);width:44px;height:44px}#bSiren{right:calc(var(--sar) + 76px);bottom:calc(var(--sab) + 160px)}body.car #bEnter{bottom:calc(var(--sab) + 236px)}#bSpray{right:calc(var(--sar) + 20px);bottom:calc(var(--sab) + 290px)}#speedo{bottom:calc(var(--sab) + 112px)}#prompt{bottom:calc(var(--sab) + 200px)}#hudTR{max-width:104px}}
 
 /* polished control buttons: glossy dome, coloured rim, inner depth */
 .cb{background:radial-gradient(circle at 50% 30%,rgba(70,86,120,.78),rgba(18,26,46,.82) 70%);box-shadow:0 5px 0 rgba(0,0,0,.28),0 8px 18px rgba(0,0,0,.35),inset 0 0 0 2.5px rgba(255,255,255,.55),inset 0 -6px 10px rgba(0,0,0,.28);letter-spacing:.5px;transition:transform .06s}
@@ -147,7 +147,7 @@ body.lefty #bL{left:auto;right:calc(var(--sar) + 114px)}body.lefty #bR{left:auto
 #dlg{position:fixed;left:50%;bottom:calc(var(--sab) + 14px);transform:translateX(-50%);width:min(680px,calc(100vw - 24px));z-index:40;display:flex;gap:12px;align-items:flex-start;background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(232,240,255,.97));color:#1b2a4a;border-radius:20px;padding:14px 16px;box-shadow:0 12px 34px rgba(0,0,0,.45);border:3px solid #fff;cursor:pointer;pointer-events:auto}
 #dlgAv{width:62px;height:62px;flex:0 0 62px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)}
 #dlgN{font-weight:900;font-size:16px;margin-bottom:2px}#dlgT{font-weight:700;font-size:16px;line-height:1.35}
-#dlgNext{position:absolute;right:14px;bottom:8px;font-weight:900;font-size:12px;color:#7a8bb0;animation:pulse .6s infinite alternate}
+#dlg{padding-bottom:30px}#dlgNext{position:absolute;right:16px;bottom:8px;font-weight:900;font-size:12px;color:#7a8bb0;animation:pulse .6s infinite alternate}
 /* phone */
 #phone{width:min(400px,94vw);max-height:92vh;border-radius:36px;background:linear-gradient(180deg,#1b2440,#0e1428);border:6px solid #2a3556;box-shadow:0 20px 50px rgba(0,0,0,.6),inset 0 0 0 2px rgba(255,255,255,.08);padding:16px 14px 18px;position:relative;display:flex;flex-direction:column}
 #phone .bar0{display:flex;justify-content:space-between;font-size:12px;font-weight:800;opacity:.85;padding:0 10px 8px}
@@ -172,6 +172,7 @@ body.lefty #bL{left:auto;right:calc(var(--sar) + 114px)}body.lefty #bR{left:auto
 .res-stars{font-size:44px;letter-spacing:6px;text-align:center;color:var(--y);text-shadow:0 3px 0 #7a4a00}
 .res-line{display:flex;justify-content:space-between;font-weight:800;font-size:17px;padding:6px 2px;border-bottom:1px dashed rgba(255,255,255,.12)}
 #rotHint{position:fixed;left:50%;bottom:calc(var(--sab) + 160px);transform:translateX(-50%);z-index:35;background:var(--glass);padding:10px 14px;border-radius:14px;font-weight:800;font-size:14px;text-align:center;pointer-events:auto;width:min(320px,86vw)}
+body.kbui .t-only,body.touchui .k-only{display:none!important}
 .tutHint{position:fixed;z-index:36;left:50%;top:44%;transform:translate(-50%,-50%);background:rgba(255,210,63,.96);color:#3a2200;padding:12px 18px;border-radius:18px;font-weight:900;font-size:17px;box-shadow:0 10px 30px rgba(0,0,0,.45);text-align:center;pointer-events:none;max-width:86vw;animation:pop .35s both}
 /* ads (hidden until enabled). Future ads must sit 150px or more away from any button; never during gameplay. */
 body:not(.ads-on) .adslot{display:none!important}
@@ -235,10 +236,10 @@ body:not(.ads-on) .adslot{display:none!important}
 <div class="screen dim hidden" id="scrHow"><div class="panel pop"><h2>❔ How to play</h2>
   <div class="muted" style="line-height:1.55;font-size:14.5px">
   <b>Zaib City</b> is a friendly open city. Nobody gets hurt: people dodge, bump and laugh it off!<br>
-  <h3>On foot</h3>👆 Left stick: walk (push far to run) · <b>JUMP</b> · <b>ENTER</b> near any car. Drivers happily stop, step out and wave.<br>
+  <span class="t-only"><h3>On foot</h3>👆 Left stick: walk (push far to run) · <b>JUMP</b> · <b>ENTER</b> near any car. Drivers happily stop, step out and wave.<br>
   <h3>Driving</h3>◀ ▶ steer (or tilt / stick in Settings) · <b>GAS</b> · <b>BRAKE</b> (hold to reverse) · <b>DRIFT</b> handbrake · <b>NITRO</b> · 📯 horn (honk near people and they wave!)<br>
-  <h3>Everywhere</h3>Drag the screen to look around · 📱 phone for jobs, cars, houses and more · 🗺️ map: tap to set a GPS waypoint.<br>
-  <h3>Keyboard</h3>WASD / arrows move &amp; drive · Space handbrake / jump · Shift nitro / sprint · E enter/exit · H horn · M map · P pause · C camera · R radio · F spray · Q siren · Tab phone<br>
+  </span><h3>Everywhere</h3><span class="t-only">Drag the screen</span><span class="k-only">Drag the mouse</span> to look around · 📱 phone for jobs, cars, houses and more · 🗺️ map: <span class="t-only">tap</span><span class="k-only">click</span> to set a GPS waypoint.<br>
+  <span class="k-only"><h3>Keyboard</h3>WASD / arrows move &amp; drive · Space handbrake / jump · Shift nitro / sprint · E enter/exit · H horn · M map · P pause · C camera · R radio · F spray · Q siren · Tab phone · Enter enter/exit or use a marker<br></span>
   <h3>Goal</h3>Help the city! Do story missions (★ on the map), jobs at the coloured markers, find hidden stars, land stunt jumps, buy cars and homes and become the <b>Hero of Zaib City</b>.
   </div>
   <button class="btn g" id="bHowBack" style="margin-top:12px">Got it!</button></div></div>
@@ -251,7 +252,7 @@ body:not(.ads-on) .adslot{display:none!important}
 <div class="screen dim hidden" id="scrPhone"><div id="phone" class="pop"><div class="bar0"><span id="phClock">9:30</span><span>ZaibPhone</span><span>🔋 100%</span></div><div id="phoneBody"></div>
   <div class="row" style="margin-top:10px"><button class="btn sm" id="bPhBack">◀ Back</button><button class="btn sm g" id="bPhClose">Close</button></div></div></div>
 <!-- Map -->
-<div class="screen hidden" id="mapScr"><canvas id="bigmap"></canvas><div id="mapHint">Tap to set a waypoint · drag to pan · pinch to zoom</div>
+<div class="screen hidden" id="mapScr"><canvas id="bigmap"></canvas><div id="mapHint"><span class="t-only">Tap to set a waypoint · drag to pan · pinch to zoom</span><span class="k-only">Click to set a waypoint · drag to pan · scroll to zoom</span></div>
   <div id="mapUI"><button class="ib" id="bMapClose">✖</button><button class="ib" id="bMapZin">＋</button><button class="ib" id="bMapZout">－</button><button class="ib" id="bMapMe">◎</button><button class="ib" id="bMapClr">🧹</button></div>
   <div id="mapLegend">⭐ Story · 🚕🍕📦🚑🚒🚓🚌 Jobs · 🏁 Race · ⏱️ Trial · 🅿️ Parking · 🛹 Stunts · 🔧 Garage · 🚗 Dealer · 🏠 Homes · ✦ Stars</div></div>
 <!-- Mission intro / generic panel -->
@@ -2038,7 +2039,7 @@ function setQuality(q) {
   if (R.shOn) makeShadowFB(R.shSize); resize();
 }
 function resize() {
-  const c = R.canvas; const dpr = Math.min(window.devicePixelRatio || 1, R.qdpr || 1.5); const w = Math.max(1, Math.round(innerWidth * dpr)), h = Math.max(1, Math.round(innerHeight * dpr));
+  const c = R.canvas; const dpr = Math.min(window.devicePixelRatio || 1, R.qdpr || 1.5); const vs = typeof viewSize === 'function' ? viewSize() : [innerWidth, innerHeight]; const w = Math.max(1, Math.round(vs[0] * dpr)), h = Math.max(1, Math.round(vs[1] * dpr));
   if (c.width !== w || c.height !== h) { c.width = w; c.height = h; } R.w = w; R.h = h; R.dpr = dpr;
 }
 function initRender(canvas) {
@@ -2522,7 +2523,7 @@ const S = {
     return { start(m) { m.fires = sites.map(s => ({ x: s[0], z: s[1], y: groundH(s[0], s[1]) + (s[2] || 2), hp: 100 })); if (o.time) m.timer = o.time; G.fires = m.fires; },
       update(m, dt) { const left = m.fires.filter(f => f.hp > 0); if (!left.length) { G.fires = null; return true; } return false; },
       tgtF: m => { const p = pPos(); let b = null, bd = 1e18; for (const f of m.fires) if (f.hp > 0) { const d = dist2(f.x, f.z, p[0], p[1]); if (d < bd) { bd = d; b = [f.x, f.z]; } } return b; },
-      text: m => 'Put out the fires: ' + m.fires.filter(f => f.hp <= 0).length + '/' + m.fires.length + (G.fireNear ? ' · HOLD 💧 SPRAY!' : ''), beams: m => m.fires.filter(f => f.hp > 0).map(f => beam(f.x, f.z, [1, .4, .2], 3, 40)) };
+      text: m => 'Put out the fires: ' + m.fires.filter(f => f.hp <= 0).length + '/' + m.fires.length + (G.fireNear ? ' · {SPRAY}!' : ''), beams: m => m.fires.filter(f => f.hp > 0).map(f => beam(f.x, f.z, [1, .4, .2], 3, 40)) };
   },
   park(x, z, yaw, o) {
     o = o || {};
@@ -2567,7 +2568,7 @@ const S = {
       tgtF: m => m.pts[Math.min(m.ci, m.pts.length - 1)], text: m => m.count > 0 ? 'Get ready…' : (text + ' · Position ' + (m.pos || 1) + '/' + (nR + 1) + ' · CP ' + Math.min(m.ci, m.pts.length - 1) + '/' + (m.pts.length - 1)), beams: m => m.pts.slice(m.ci, m.ci + 2).map((q, k) => Object.assign(beam(q[0], q[1], m.ci + k === m.pts.length - 1 ? [1, .3, .8] : [1, .85, .2], 5, 26), { a: k ? .2 : .6 })) };
   },
   speed(kmh, text) { return { update() { return pSpeed() * 3.6 >= kmh; }, text: text || 'Reach ' + kmh + ' km/h' }; },
-  drift(meters, text) { return { start(m) { m.d0 = SAVE.stats.drift; }, update(m) { return SAVE.stats.drift - m.d0 >= meters; }, text: m => (text || 'Drift! Hold HANDBRAKE while turning') + ' ' + Math.round(SAVE.stats.drift - m.d0) + '/' + meters + ' m' }; },
+  drift(meters, text) { return { start(m) { m.d0 = SAVE.stats.drift; }, update(m) { return SAVE.stats.drift - m.d0 >= meters; }, text: m => (text || 'Drift! {DRIFT} while turning') + ' ' + Math.round(SAVE.stats.drift - m.d0) + '/' + meters + ' m' }; },
   repair() { return { update() { const v = pVeh(); return v && v.dmg < .05; }, text: 'Drive into the garage marker and repair your car', tgtF: () => { const g = nearestGarage(); return [g.x, g.z]; }, beams: () => { const g = nearestGarage(); return [beam(g.x, g.z, [0, 1, .7])]; } }; },
   setTime(h, wx) { return { start() { G.tod = h; if (wx != null) { G.wx.type = wx; G.wx.amt = 1; G.wx.t = 400; } }, update() { return true; } }; },
 };
@@ -2615,7 +2616,7 @@ const JOBS = {
     steps() { const st = [S.vehicle(['van'])]; let from = pPos(); for (let k = 0; k < 4; k++) { const b = randomCurb(from[0], from[1], 180, 500); st.push(S.goto(b.x, b.z, 'Drop off the parcel 📦 (' + (k + 1) + '/4)', { stop: 1, time: k === 0 ? 80 : Math.hypot(b.x - from[0], b.z - from[1]) / 8 + 20, r: 8 })); st.push(S.fn(m => { m.cash += Math.round(50 * payMul()); SFX.cash(); SAVE.stats.parcels++; dailyProgress('parcels', 1); })); from = [b.x, b.z]; } return st; } },
   ambulance: { kind: 'hospital', title: 'Ambulance Run', icon: '🚑', desc: 'Rush patients to the hospital. Drive smoothly: bumps make them dizzy!', reward: 450, xp: 110, timeBonus: 6,
     steps() { const st = [S.vehicle(['ambulance'])]; const H = W.specials.hospital; for (let k = 0; k < 2; k++) { const a = randomCurb(H.x, H.z, 250, 650); st.push(S.fn(m => { pVeh() && (pVeh().siren = 1); })); st.push(S.pickup(a.x, a.z, 'Pick up the patient 🤕 (sirens on!)', randLook(), { time: 70, hi: 'Ooh, my ankle! Thanks for coming!' })); st.push(S.dropoff(H.x, H.z, 'Rush to the Hospital 🏥', { time: 60, bye: 'Thank you! I feel better already!' })); st.push(S.fn(m => { SAVE.stats.patients++; dailyProgress('patients', 1); m.cash += Math.round(80 * payMul()); SFX.cash(); })); } return st; } },
-  fire: { kind: 'fire', title: 'Fire Response', icon: '🚒', desc: 'Drive the fire engine to the blaze and hold SPRAY to hose it down.', reward: 500, xp: 120, timeBonus: 4,
+  fire: { kind: 'fire', title: 'Fire Response', icon: '🚒', desc: 'Drive the fire engine to the blaze and {SPRAY} to hose it down.', reward: 500, xp: 120, timeBonus: 4,
     steps() { const st = [S.vehicle(['fire'])]; const p = pPos(); const sites = pickFireSites(p[0], p[1], 2, 200, 600); st.push(S.extinguish(sites, { time: 150 })); st.push(S.fn(m => { SAVE.stats.fires += sites.length; dailyProgress('fires', sites.length); })); return st; } },
   police: { kind: 'police', title: 'Speed Patrol', icon: '🚓', desc: 'A speeder is racing through town! Bump them 3 times to pull them over. Friendly fines only.', reward: 450, xp: 110,
     steps() { return [S.vehicle(['police']), S.fn(m => { pVeh().siren = 1; }), S.chase(3, 100), S.wait(1.5, 'Great job, officer!')]; } },
@@ -2643,10 +2644,10 @@ function raceRoute(pts) { const ids = []; for (let k = 0; k < pts.length - 1; k+
 function DL(who, text) { return { who, text }; }
 const STORY = [
   { id: 's01', title: 'Welcome to Zaib City', giver: 'mayor', at: [214, 889], reward: 300, xp: 120, intro: [DL('mayor', 'Hello and welcome to Zaib City! I\'m Mayor Sunny. Everyone here shares, helps and waves hello.'), DL('mayor', 'Folks happily lend their cars, so just ask nicely! Hop into that little hatchback and swing by City Hall downtown.')],
-    steps: () => [S.goto(...SP('home0c'), 'Walk to the hatchback and press ENTER', { foot: 1, r: 4 }), S.vehicle(['hatch', 'taxi', 'sports', 'suv', 'pickup', 'muscle', 'super'], 'car'), S.goto(600, 404, 'Drive to City Hall (follow the GPS line)', { stop: 1, r: 10 })], outro: [DL('mayor', 'You made it! Lovely driving. Here\'s a little welcome gift. Check your phone for jobs any time!')] },
+    steps: () => [S.goto(...SP('home0c'), 'Walk to the hatchback and {CAR}', { foot: 1, r: 4 }), S.vehicle(['hatch', 'taxi', 'sports', 'suv', 'pickup', 'muscle', 'super'], 'car'), S.goto(600, 404, 'Drive to City Hall (follow the GPS line)', { stop: 1, r: 10 })], outro: [DL('mayor', 'You made it! Lovely driving. Here\'s a little welcome gift. Check your phone for jobs any time!')] },
   { id: 's02', title: 'Hot Delivery', giver: 'chef', at: 'pizza', reward: 400, xp: 120, intro: [DL('chef', 'Mamma mia, a new face! My delivery rider has the hiccups. Can you deliver two pizzas while they\'re hot?')],
     steps: () => { const a = randomCurb(...SP('pizza'), 200, 400, zoneFilter(['midtown', 'suburb'])), b = randomCurb(a.x, a.z, 200, 400, zoneFilter(['midtown', 'suburb', 'downtown'])); return [S.vehicle(['scooter']), S.goto(a.x, a.z, 'Deliver pizza #1 🍕', { stop: 1, time: 70 }), S.goto(b.x, b.z, 'Deliver pizza #2 🍕', { stop: 1, time: 50 })]; }, outro: [DL('chef', 'Bellissimo! The customers say the pizza was still steaming. Come back for more deliveries any time!')] },
-  { id: 's03', title: 'Tune-Up Time', giver: 'mech', at: 'garage1', reward: 450, xp: 130, intro: [DL('mech', 'Name\'s Sprocket. I fix things! Bring me a car, any car, and I\'ll show you my garage.'), DL('mech', 'Then show me some style: hold HANDBRAKE while turning to drift. Easy does it!')],
+  { id: 's03', title: 'Tune-Up Time', giver: 'mech', at: 'garage1', reward: 450, xp: 130, intro: [DL('mech', 'Name\'s Sprocket. I fix things! Bring me a car, any car, and I\'ll show you my garage.'), DL('mech', 'Then show me some style: {DRIFT} while turning to drift. Easy does it!')],
     steps: () => [S.vehicle(['hatch', 'taxi', 'sports', 'suv', 'pickup', 'muscle', 'super', 'police'], 'car'), S.fn(m => { const v = pVeh(); if (v) v.dmg = Math.max(v.dmg, .3); }), S.repair(), S.drift(120)], outro: [DL('mech', 'Sweet slide! Garages repair, paint and upgrade your rides. Tell your friends!')] },
   { id: 's04', title: 'Fare Game', giver: 'mayor', at: 'taxi', reward: 500, xp: 140, intro: [DL('mayor', 'The taxi company needs a hand during rush hour. Two fares, then you\'re a true local!')],
     steps: () => { const st = [S.vehicle(['taxi'])]; let f = SP('taxi'); for (let k = 0; k < 2; k++) { const a = randomCurb(f[0], f[1], 100, 300), b = randomCurb(a.x, a.z, 300, 600); st.push(S.pickup(a.x, a.z, 'Pick up the passenger', randLook(), { time: 70 })); st.push(S.dropoff(b.x, b.z, 'Drop them off', { time: 70 })); f = [b.x, b.z]; } return st; }, outro: [DL('mayor', 'Wonderful! The beach folks heard about you. Let\'s open up the coast!')] },
@@ -2694,7 +2695,7 @@ function SP(id) {
 }
 function storyAt(s) { if (typeof s.at === 'string') { const m = W.specials[s.at]; return [m.x + 9, m.z + 3]; } return s.at; }
 function onStunt(v, air, dist) { const m = G.mission; if (m && m.onStunt) m.onStunt(v, air, dist); const r = nearestRamp(v.airStart); if (r && r.label && air > 1 && !SAVE.jumps.includes(r.id)) { SAVE.jumps.push(r.id); banner('Stunt jump: ' + r.label, 'Unique jumps ' + SAVE.jumps.length + '/' + W.ramps.length + ' · +' + fmtCash(300)); addCash(300, 'stunt'); saveNow(); } }
-function onEnterVehicle(v) { if (v.type === 'icecream') toast('🍦 Mr. Swirl Van! Honk to play the chime'); }
+function onEnterVehicle(v) { if (v.type === 'icecream') toast('🍦 Mr. Swirl Van! {HONK} to play the chime'); }
 function onExitVehicle(v) { }
 // ================= hud: minimap, big map, bubbles, markers, toasts =================
 const $ = id => document.getElementById(id);
@@ -2789,7 +2790,7 @@ function updateRoute(force) {
 }
 // ---------- 2D overlay: bubbles, labels, offscreen arrow ----------
 function drawOverlay() {
-  const cv = $('hud'); const dpr = Math.min(2, devicePixelRatio || 1); if (cv.width !== Math.round(innerWidth * dpr)) { cv.width = Math.round(innerWidth * dpr); cv.height = Math.round(innerHeight * dpr); }
+  const cv = $('hud'); const dpr = Math.min(2, devicePixelRatio || 1); if (cv.width !== Math.round(innerWidth * dpr) || cv.height !== Math.round(innerHeight * dpr)) { cv.width = Math.round(innerWidth * dpr); cv.height = Math.round(innerHeight * dpr); }
   const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, innerWidth, innerHeight); if (G.state !== 'play') return;
   const c = G.cam; const bubbles = [];
   for (const p of G.peds) if (p.bub) bubbles.push([p.x, p.y + 2.3, p.z, p.bub]);
@@ -2819,21 +2820,37 @@ function drawOverlay() {
 }
 function roundRect(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
 // ---------- toasts / banners ----------
-function toast(t, dur) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = t; const box = $('toasts'); box.appendChild(el); while (box.children.length > 3) box.firstChild.remove(); setTimeout(() => el.remove(), (dur || 2.4) * 1000); }
+function toast(t, dur) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = ctlTxt(t); const box = $('toasts'); box.appendChild(el); while (box.children.length > 3) box.firstChild.remove(); setTimeout(() => el.remove(), (dur || 2.4) * 1000); }
 let bannerQ = [], bannerBusy = 0;
 function banner(t, s) { bannerQ.push([t, s]); if (!bannerBusy) nextBanner(); }
 function nextBanner() { const b = bannerQ.shift(); if (!b) { bannerBusy = 0; return; } bannerBusy = 1; const el = $('banner'); el.querySelector('.t').textContent = b[0]; el.querySelector('.s').textContent = b[1] || ''; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); setTimeout(nextBanner, 2300); }
 let cashShown = null;
 function hudCashPop(n) { const el = $('cash'); el.style.transform = 'scale(1.18)'; el.style.color = n >= 0 ? '#7dffb2' : '#ff9a8a'; setTimeout(() => { el.style.transform = ''; el.style.color = ''; }, 300); }
+// ---------- HUD layout: keep objective / toasts / tutorial hint clear of the corner HUD ----------
+let hudLayT = 0;
+function vis(el) { return el && !el.classList.contains('hidden') && el.offsetParent !== null; }
+function layoutHUD(force) {
+  const now = performance.now(); if (!force && now - hudLayT < 120) return; hudLayT = now;
+  const w = innerWidth, h = innerHeight; const tl = $('hudTL').getBoundingClientRect(), ck = $('clock').getBoundingClientRect(), tr = $('hudTR').getBoundingClientRect();
+  const tlR = Math.max(tl.right, ck.right), tlB = Math.max(tl.bottom, ck.bottom); const sat = tr.top - 10;
+  const obj = $('obj'), toasts = $('toasts'); let left = 10, right = w - 10, top;
+  const bandL = tlR + 8, bandR = tr.left - 8;
+  if (bandR - bandL >= 230 && w > h) { left = bandL; right = bandR; top = sat + 10; } else { top = Math.max(tlB, tr.bottom) + 8; }
+  const cx = (left + right) / 2, mw = Math.max(120, right - left);
+  obj.style.left = cx + 'px'; obj.style.top = top + 'px'; obj.style.maxWidth = mw + 'px';
+  let bottom = top; if (vis(obj)) bottom = obj.getBoundingClientRect().bottom;
+  toasts.style.left = cx + 'px'; toasts.style.width = Math.min(520, mw) + 'px'; toasts.style.top = (bottom + 6) + 'px';
+  G.hudFree = { top: bottom + 8, cx, mw };
+}
 function updateHUD() {
-  if (cashShown == null) cashShown = SAVE.cash; cashShown = Math.abs(SAVE.cash - cashShown) < 2 ? SAVE.cash : lerp(cashShown, SAVE.cash, .15); $('cash').textContent = fmtCash(cashShown);
+  if (cashShown == null) cashShown = SAVE.cash; cashShown = Math.abs(SAVE.cash - cashShown) < 2 ? SAVE.cash : lerp(cashShown, SAVE.cash, .15); $('cash').textContent = fmtCash(cashShown); try { layoutHUD(); } catch (_) { }
   const rs = Math.floor(SAVE.rep / 20); $('repS').textContent = '★'.repeat(rs) + '☆'.repeat(5 - rs) + ' ' + repTitle();
   $('lvlP').firstChild.nodeValue = 'LV ' + SAVE.lvl + ' '; $('lvlBar').firstChild.style.width = (SAVE.xp / xpNeed(SAVE.lvl) * 100).toFixed(1) + '%';
   const h = Math.floor(G.tod), mi = Math.floor((G.tod % 1) * 60); const L = R.light; $('clock').textContent = (h < 10 ? '0' : '') + h + ':' + (mi < 10 ? '0' : '') + mi + ' ' + (L.night > .5 ? '🌙' : ['☀️', '⛅', '🌧️', '🌫️'][G.wx.amt > .5 ? G.wx.type : 0]);
   const P = G.P; if (P.mode === 'car') { const v = P.veh; const sp = vSpeed(v) * (SAVE.settings.units === 'mph' ? 2.237 : 3.6); $('spd').textContent = Math.round(sp); $('spdU').textContent = (SAVE.settings.units === 'mph' ? 'MPH' : 'KM/H') + ' · ' + v.d.name.toUpperCase(); $('nitBar').firstChild.style.width = (v.nitro * 100) + '%'; $('dmgBar').firstChild.style.width = (v.dmg * 100) + '%'; $('bSiren').classList.toggle('hidden', !v.d.siren); $('bSpray').classList.toggle('hidden', v.type !== 'fire'); }
   // objective
   const m = G.mission; const s = curStep();
-  if (m && s && !G.dialog) { $('obj').classList.remove('hidden'); const tx = typeof s.text === 'function' ? s.text(m) : s.text; $('objT').textContent = (m.offT > 0 ? '🚗 Get back in your vehicle! ' + Math.ceil(30 - m.offT) + 's · ' : '') + (tx || '…') + (s.stopHint && pSpeed() > 2.5 && missionTarget() && near(missionTarget()[0], missionTarget()[1], 12) ? ' · STOP HERE' : ''); const tt = $('objTimer'); if (m.timer != null) { tt.textContent = '⏱ ' + fmtTime(m.timer); tt.classList.toggle('warn', m.timer < 10); } else tt.textContent = ''; }
+  if (m && s && !G.dialog) { $('obj').classList.remove('hidden'); const tx = typeof s.text === 'function' ? s.text(m) : s.text; $('objT').textContent = (m.offT > 0 ? '🚗 Get back in your vehicle! ' + Math.ceil(30 - m.offT) + 's · ' : '') + (ctlTxt(tx) || '…') + (s.stopHint && pSpeed() > 2.5 && missionTarget() && near(missionTarget()[0], missionTarget()[1], 12) ? ' · STOP HERE' : ''); const tt = $('objTimer'); if (m.timer != null) { tt.textContent = '⏱ ' + fmtTime(m.timer); tt.classList.toggle('warn', m.timer < 10); } else tt.textContent = ''; }
   else $('obj').classList.add('hidden');
   const cd = $('countdown'); if (G.countdown > 0) { cd.classList.remove('hidden'); cd.textContent = G.countdown > 3 ? 'READY' : Math.ceil(G.countdown); } else cd.classList.add('hidden');
 }
@@ -2841,7 +2858,12 @@ function updateHUD() {
 const INP = { mx: 0, my: 0, gas: 0, brake: 0, steer: 0, hand: 0, nitro: 0, jump: 0, sprint: 0, horn: 0, spray: 0 };
 G.inp = INP;
 const KEYS = {}; const BTN = {}; const JOY = { id: null, x: 0, y: 0, cx: 0, cy: 0 }; let TILT = 0, tiltOK = false;
-const IS_TOUCH = matchMedia('(pointer:coarse)').matches || 'ontouchstart' in window;
+let IS_TOUCH = detectTouch();
+function detectTouch() { try { return matchMedia('(pointer:coarse)').matches || (navigator.maxTouchPoints > 0 && matchMedia('(hover:none)').matches); } catch (_) { return 'ontouchstart' in window; } }
+let LAST_INPUT = null; // 'touch' | 'kb' once the player actually uses one
+function refreshTouch() { const t = LAST_INPUT ? LAST_INPUT === 'touch' : detectTouch(); if (t !== IS_TOUCH) { IS_TOUCH = t; } document.body.classList.toggle('touchui', IS_TOUCH_UI()); document.body.classList.toggle('kbui', !IS_TOUCH_UI()); if (typeof updateCtlVis === 'function' && G.state) updateCtlVis(); }
+// device-aware control wording: {CAR} {DRIFT} {SPRAY} {HONK} {NEXT}
+function ctlTxt(s) { if (!s || s.indexOf('{') < 0) return s; const T = IS_TOUCH_UI(); return s.replace(/\{(\w+)\}/g, (a, k) => { const m = { CAR: T ? 'tap the 🚗 car button' : 'press E or Enter', DRIFT: T ? 'hold ⟲ DRIFT' : 'hold Space', SPRAY: T ? 'HOLD 💧 SPRAY' : 'HOLD F to spray', HONK: T ? 'Tap 📯' : 'Press H', RADIO: T ? 'Tap 📻' : 'Press R' }[k]; return m == null ? a : m; }); }
 const SCREENS = ['scrTitle', 'scrSettings', 'scrHow', 'scrPause', 'scrPhone', 'mapScr', 'scrInfo', 'scrResult'];
 let screenStack = [];
 function showScreen(id) { for (const s of SCREENS) $(s).classList.toggle('hidden', s !== id); G.screen = id; if (id && id !== 'scrTitle') { $('ctl').classList.add('hidden'); } updateCtlVis(); }
@@ -2849,7 +2871,7 @@ function hideScreens() { for (const s of SCREENS) $(s).classList.add('hidden'); 
 function closeAllPanels() { if (G.state === 'play') hideScreens(); }
 function modalOpen() { return !!G.screen; }
 function updateCtlVis() { const play = G.state === 'play' && !G.screen; $('ctl').classList.toggle('hidden', !play || !IS_TOUCH_UI()); $('hud2').classList.toggle('hidden', G.state !== 'play'); }
-function IS_TOUCH_UI() { return IS_TOUCH || G.forceTouch; }
+function IS_TOUCH_UI() { return !!(IS_TOUCH || G.forceTouch); }
 function setBodyMode() { const b = document.body, P = G.P; b.classList.toggle('car', P && P.mode === 'car'); b.classList.toggle('foot', !P || P.mode !== 'car'); const st = SAVE.settings.steer; b.classList.toggle('steer-tilt', st === 'tilt'); b.classList.toggle('steer-stick', st === 'stick'); b.classList.toggle('lefty', !!+SAVE.settings.left); }
 // ---------- input ----------
 function bindHold(id, key) {
@@ -2886,7 +2908,7 @@ function initInput() {
     if (c === 'KeyM') { if (G.screen === 'mapScr') hideScreens(); else if (!G.screen) openMap(); return; }
     if (c === 'Tab') { if (G.screen === 'scrPhone') hideScreens(); else if (!G.screen) openPhone(); return; }
     if (G.screen) return;
-    if (c === 'KeyE') enterExit(); else if (c === 'KeyH') hornPress(); else if (c === 'KeyC') camCycle(); else if (c === 'KeyR') { if (G.P.mode === 'car') nextStation(); } else if (c === 'KeyQ') toggleSiren(); else if (c === 'Enter' || c === 'KeyT') { if (G.promptAct) G.promptAct(); } else if (c === 'Space' && G.P.mode === 'foot') INP.jumpQ = 1; else if (c === 'F3') G.showFps = !G.showFps;
+    if (c === 'KeyE' || (c === 'Enter' && !G.promptAct)) enterExit(); else if (c === 'KeyH') hornPress(); else if (c === 'KeyC') camCycle(); else if (c === 'KeyR') { if (G.P.mode === 'car') nextStation(); } else if (c === 'KeyQ') toggleSiren(); else if (c === 'Enter' || c === 'KeyT') { if (G.promptAct) G.promptAct(); } else if (c === 'Space' && G.P.mode === 'foot') INP.jumpQ = 1; else if (c === 'F3') G.showFps = !G.showFps;
   });
   addEventListener('keyup', e => { KEYS[e.code] = 0; });
   addEventListener('blur', () => { for (const k in KEYS) KEYS[k] = 0; for (const k in BTN) BTN[k] = 0; });
@@ -2970,7 +2992,7 @@ function playPressed() {
 function openDialog(lines, cb) {
   G.dialog = { lines, i: 0, cb, ch: 0 }; $('dlg').classList.remove('hidden'); showLine(); SFX.phone();
 }
-function showLine() { const D2 = G.dialog; const l = D2.lines[D2.i]; const ch = CHARS[l.who] || CHARS.you; $('dlgAv').textContent = ch.e; $('dlgAv').style.background = ch.c; $('dlgN').textContent = ch.n; $('dlgN').style.color = '#1b2a4a'; D2.ch = 0; D2.full = l.text; $('dlgT').textContent = ''; }
+function showLine() { const D2 = G.dialog; const l = D2.lines[D2.i]; const ch = CHARS[l.who] || CHARS.you; $('dlgAv').textContent = ch.e; $('dlgAv').style.background = ch.c; $('dlgN').textContent = ch.n; $('dlgN').style.color = '#1b2a4a'; D2.ch = 0; D2.full = ctlTxt(l.text); $('dlgNext').textContent = IS_TOUCH_UI() ? 'TAP ▶' : 'ENTER ▶'; $('dlgT').textContent = ''; }
 function dialogTick(dt) { const D2 = G.dialog; if (!D2) return; if (D2.ch < D2.full.length) { const o = Math.floor(D2.ch); D2.ch = Math.min(D2.full.length, D2.ch + dt * 55); if (Math.floor(D2.ch) !== o) { $('dlgT').textContent = D2.full.slice(0, Math.floor(D2.ch)); if (Math.floor(D2.ch) % 3 === 0) SFX.type(); } } }
 function dialogAdvance() { const D2 = G.dialog; if (!D2) return; if (D2.ch < D2.full.length) { D2.ch = D2.full.length; $('dlgT').textContent = D2.full; return; } D2.i++; if (D2.i >= D2.lines.length) { $('dlg').classList.add('hidden'); G.dialog = null; SFX.click(); D2.cb && D2.cb(); } else { showLine(); SFX.click(); } }
 // ---------- info panels ----------
@@ -2987,7 +3009,7 @@ function startStory(st) { const mt = String(st.steps).match(/unlockDistrict\('(\
 }
 function openJob(key, from) {
   const J = JOBS[key]; if (G.mission) { toast('Finish your current mission first'); return; } const best = SAVE.best[J.id];
-  infoPanel(`<div style="text-align:center"><div style="font-size:56px">${J.icon}</div><h2 style="margin:2px 0 8px">${J.title}</h2><div style="font-size:15px;line-height:1.45">${J.desc}</div><div style="margin-top:10px;font-weight:900;color:#7dffb2">Pays ~${fmtCash(J.reward * payMul())}+ · ${J.xp} XP</div>${best ? `<div class="muted" style="margin-top:4px">Best: ${fmtTime(best)}</div>` : ''}</div>` + btnRow([['no', '', 'Not now'], ['go', 'y', '▶ Start job']]), from);
+  infoPanel(`<div style="text-align:center"><div style="font-size:56px">${J.icon}</div><h2 style="margin:2px 0 8px">${J.title}</h2><div style="font-size:15px;line-height:1.45">${ctlTxt(J.desc)}</div><div style="margin-top:10px;font-weight:900;color:#7dffb2">Pays ~${fmtCash(J.reward * payMul())}+ · ${J.xp} XP</div>${best ? `<div class="muted" style="margin-top:4px">Best: ${fmtTime(best)}</div>` : ''}</div>` + btnRow([['no', '', 'Not now'], ['go', 'y', '▶ Start job']]), from);
   wireActs($('infoBody'), { no: () => back(), go: () => { screenStack = []; hideScreens(); startMission(JOBS[key]); } });
 }
 let resultData = null;
@@ -3019,7 +3041,7 @@ function renderPhone(app) {
   const title = t => `<h2 style="margin:4px 0 10px;text-align:center;color:var(--y)">${t}</h2>`;
   if (app === 'home') { html = `<div style="text-align:center;margin:4px 0 10px"><div style="font-size:30px;font-weight:900">${fmtCash(SAVE.cash)}</div><div class="muted" style="font-weight:800">LV ${SAVE.lvl} · ${repTitle()}</div></div><div class="apps">` + APPS.map(a => `<button class="app" data-act="app_${a[0]}"><i style="background:${a[3]}">${a[1]}</i>${a[2]}</button>`).join('') + '</div>'; for (const a of APPS) acts['app_' + a[0]] = () => { if (a[0] === 'map') { hideScreens(); openMap(); } else if (a[0] === 'settings') openSettings('scrPhone'); else if (a[0] === 'help') openHow('scrPhone'); else renderPhone(a[0]); }; }
   else if (app === 'jobs') {
-    html = title('💼 Jobs') + '<div class="list">'; for (const k in JOBS) { const J = JOBS[k]; const mk = W.markers.find(m => JOB_OF_MARKER[m.kind] === k); const lock = mk && !isUnlocked(district(mk.x, mk.z)); html += card(J.icon, J.title, lock ? '🔒 ' + DISTRICTS[district(mk.x, mk.z)].name + ' locked' : J.desc, (mk ? pbtn('gps_' + k, '📍', '', lock) : '') + pbtn('go_' + k, '▶', 'y', lock || !!G.mission)); acts['gps_' + k] = () => { setGPS(mk.x, mk.z, J.title); hideScreens(); }; acts['go_' + k] = () => { hideScreens(); openJob(k); }; } html += '</div>';
+    html = title('💼 Jobs') + '<div class="list">'; for (const k in JOBS) { const J = JOBS[k]; const mk = W.markers.find(m => JOB_OF_MARKER[m.kind] === k); const lock = mk && !isUnlocked(district(mk.x, mk.z)); html += card(J.icon, J.title, lock ? '🔒 ' + DISTRICTS[district(mk.x, mk.z)].name + ' locked' : ctlTxt(J.desc), (mk ? pbtn('gps_' + k, '📍', '', lock) : '') + pbtn('go_' + k, '▶', 'y', lock || !!G.mission)); acts['gps_' + k] = () => { setGPS(mk.x, mk.z, J.title); hideScreens(); }; acts['go_' + k] = () => { hideScreens(); openJob(k); }; } html += '</div>';
   } else if (app === 'story') {
     html = title('⭐ Story') + '<div class="list">'; STORY.forEach((s, i) => { const ch = CHARS[s.giver]; const done = i < SAVE.story, cur = i === SAVE.story; if (i > SAVE.story + 2) return; html += card(ch.e, (i + 1) + '. ' + (i > SAVE.story ? '???' : s.title), done ? '✅ Complete' : cur ? ch.n + ' · ' + fmtCash(s.reward) : 'Locked', cur ? pbtn('sgps', '📍') + pbtn('sgo', '▶', 'y', !!G.mission) : '', done ? 'done' : ''); }); html += '</div>';
     const st = STORY[SAVE.story]; if (!st) html += '<div style="text-align:center;margin-top:10px;font-weight:900">🎉 You finished the story! Keep exploring.</div>';
@@ -3040,7 +3062,7 @@ function renderPhone(app) {
     const s = SAVE.stats; const rows = [['🛣️ Distance', (s.dist / 1000).toFixed(1) + ' km'], ['💨 Drifted', Math.round(s.drift) + ' m'], ['🏎️ Top speed', Math.round(s.topSpeed) + ' km/h'], ['🪂 Best air', s.air.toFixed(1) + ' s'], ['🚕 Fares', s.fares], ['🍕 Pizzas', s.pizzas], ['📦 Parcels', s.parcels], ['🚑 Patients', s.patients], ['🚒 Fires', s.fires], ['🚓 Pull-overs', s.pulls], ['🏁 Race wins', s.raceWins + '/' + s.races], ['🅿️ Parking', s.parks], ['👋 Friendly waves', (s.greets || 0) + (s.waves || 0)], ['🚦 Red-light stops', s.redStops], ['🎯 Missions', s.missions], ['💵 Earned', fmtCash(s.earned)], ['⏱ Play time', fmtTime(s.playT).replace(/^(\d+):/, (m, a) => Math.floor(a / 60) + 'h ' + (a % 60) + 'm ') ]];
     html = title('📊 Stats') + rows.map(r => `<div class="res-line" style="font-size:14px"><span>${r[0]}</span><span>${r[1]}</span></div>`).join('');
   } else if (app === 'radio') {
-    html = title('📻 Radio') + '<div class="list">' + STATIONS.map((s, i) => card(i ? '🎵' : '🔇', s.n, i === AU.st ? '▶ Now playing' : '', pbtn('st_' + i, i === AU.st ? 'ON' : 'Play', i === AU.st ? 'g' : ''))).join('') + '</div><div class="muted" style="text-align:center;margin-top:8px">Radio plays while you drive. Tap 📻 in the car to switch stations.</div>'; STATIONS.forEach((s, i) => acts['st_' + i] = () => { AU.st = i; SAVE.settings.radio = i; applyVolumes(); renderPhone('radio'); });
+    html = title('📻 Radio') + '<div class="list">' + STATIONS.map((s, i) => card(i ? '🎵' : '🔇', s.n, i === AU.st ? '▶ Now playing' : '', pbtn('st_' + i, i === AU.st ? 'ON' : 'Play', i === AU.st ? 'g' : ''))).join('') + '</div><div class="muted" style="text-align:center;margin-top:8px">Radio plays while you drive. ' + ctlTxt('{RADIO}') + ' in the car to switch stations.</div>'; STATIONS.forEach((s, i) => acts['st_' + i] = () => { AU.st = i; SAVE.settings.radio = i; applyVolumes(); renderPhone('radio'); });
   }
   b.innerHTML = html; b.scrollTop = 0; wireActs(b, acts);
 }
@@ -3174,14 +3196,39 @@ function idleBeams() {
   if (m) { const tg = missionTarget(); G.arrow = G.arrowV ? [G.arrowV.x, G.arrowV.y + 4, G.arrowV.z] : (tg && !(curStep() && curStep().beams && curStep().beams(m).length) ? [tg[0], groundH(tg[0], tg[1]) + 4, tg[1]] : null); }
   G.beams = B2;
 }
+// ---------- viewport fit (resize / rotation / visualViewport / DPR / device-mode toggles) ----------
+let fitT = 0, fitLast = '';
+function viewSize() { const de = document.documentElement, vv = window.visualViewport; let w = innerWidth || de.clientWidth, h = innerHeight || de.clientHeight; if (vv && vv.scale <= 1.01) { w = Math.max(w, Math.round(vv.width)); h = Math.max(h, Math.round(vv.height)); } return [Math.max(1, w), Math.max(1, h)]; }
+function fitNow() {
+  try {
+    const [w, h] = viewSize(); const b = document.body, de = document.documentElement;
+    for (const el of [de, b]) { el.style.width = w + 'px'; el.style.height = h + 'px'; }
+    de.style.setProperty('--vw', w + 'px'); de.style.setProperty('--vh', h + 'px');
+    b.classList.toggle('portrait', h > w); b.classList.toggle('landscape', h <= w); b.classList.toggle('narrow', w < 380);
+    refreshTouch(); if (R.canvas) resize(); const key = w + 'x' + h + '@' + devicePixelRatio;
+    if (key !== fitLast) { fitLast = key; if (G.screen === 'mapScr') drawBigMap(); if (G.state === 'play' && !(IS_TOUCH_UI() && h > w)) $('rotHint').classList.add('hidden'); }
+  } catch (e) { G.lastErr = String(e && e.stack || e); }
+}
+function fitSoon() { fitNow(); clearTimeout(fitT); fitT = setTimeout(fitNow, 250); setTimeout(fitNow, 600); }
+function watchDPR() { try { const mq = matchMedia('(resolution: ' + devicePixelRatio + 'dppx)'); const f = () => { mq.removeEventListener ? mq.removeEventListener('change', f) : mq.removeListener(f); fitSoon(); watchDPR(); }; mq.addEventListener ? mq.addEventListener('change', f) : mq.addListener(f); } catch (_) { } }
+function initFit() {
+  addEventListener('resize', fitSoon); addEventListener('orientationchange', fitSoon); addEventListener('pageshow', fitSoon);
+  if (window.visualViewport) { visualViewport.addEventListener('resize', fitSoon); }
+  if (screen.orientation && screen.orientation.addEventListener) screen.orientation.addEventListener('change', fitSoon);
+  try { const pm = matchMedia('(pointer:coarse)'); const f = () => { LAST_INPUT = null; fitSoon(); }; pm.addEventListener ? pm.addEventListener('change', f) : pm.addListener(f); } catch (_) { }
+  addEventListener('pointerdown', e => { if (e.pointerType === 'touch' && LAST_INPUT !== 'touch') { LAST_INPUT = 'touch'; refreshTouch(); } }, true);
+  addEventListener('keydown', e => { if (LAST_INPUT !== 'kb' && !/^(Shift|Control|Alt|Meta)/.test(e.code) && /^(Key|Arrow|Space|Enter)/.test(e.code)) { LAST_INPUT = 'kb'; refreshTouch(); } }, true);
+  setInterval(() => { const [w, h] = viewSize(); if (w + 'x' + h + '@' + devicePixelRatio !== fitLast) fitNow(); }, 400);
+  watchDPR(); fitNow();
+}
 // ---------- tutorial hints ----------
 let tutEl = null;
 function tutorialHints() {
   if (!G.tutorial || !G.mission || G.mission.def.id !== 's01' || G.dialog || G.screen) { if (tutEl) { tutEl.remove(); tutEl = null; } return; }
   const i = G.mission.i; const T = IS_TOUCH_UI(); let t = '';
-  if (i === 1) t = T ? '👈 Use the left stick to walk to the car · drag the screen to look' : 'WASD to walk · drag the mouse to look'; else if (i === 2) t = T ? 'Tap ENTER next to the car' : 'Press E next to the car'; else if (i === 3) t = G.mission.t < 30 && pSpeed() < 12 ? (T ? 'Hold GAS ▲ · steer with ◀ ▶ · follow the pink GPS line' : 'W to drive · A/D to steer · follow the pink GPS line') : '';
+  if (i === 1) t = T ? '👈 Use the left stick to walk to the car · drag the screen to look' : 'WASD to walk · drag the mouse to look'; else if (i === 2) t = T ? 'Tap the 🚗 car button next to the car' : 'Press E or Enter next to the car'; else if (i === 3) t = G.mission.t < 30 && pSpeed() < 12 ? (T ? 'Hold GAS ▲ · steer with ◀ ▶ · follow the pink GPS line' : 'W to drive · A/D to steer · follow the pink GPS line') : '';
   if (!t) { if (tutEl) { tutEl.remove(); tutEl = null; } return; }
-  if (!tutEl) { tutEl = document.createElement('div'); tutEl.className = 'tutHint'; document.body.appendChild(tutEl); } if (tutEl.textContent !== t) tutEl.textContent = t; tutEl.style.top = i === 3 ? 'calc(var(--sat) + 96px)' : '40%'; tutEl.style.fontSize = i === 3 ? '14px' : '';
+  if (!tutEl) { tutEl = document.createElement('div'); tutEl.className = 'tutHint'; tutEl.style.animation = 'none'; document.body.appendChild(tutEl); } if (tutEl.textContent !== t) tutEl.textContent = t; layoutHUD(true); const F = G.hudFree; if (F) { const tb = $('toasts').getBoundingClientRect(); const ob = $('obj'); const top = Math.max(F.top, vis(ob) ? ob.getBoundingClientRect().bottom + 8 : 0, $('toasts').children.length ? tb.bottom + 6 : 0); tutEl.style.top = top + 'px'; tutEl.style.left = F.cx + 'px'; tutEl.style.maxWidth = Math.min(F.mw, innerWidth * .9) + 'px'; tutEl.style.transform = 'translateX(-50%)'; } else tutEl.style.top = '40%'; tutEl.style.fontSize = i === 3 || innerHeight < 500 ? '14px' : '';
 }
 // ---------- weather / time ----------
 function timeWeather(dt) {
@@ -3249,7 +3296,7 @@ function init() {
     G.tod = SAVE.time || 9.5; if (G.tod > 20.5 || G.tod < 6) G.tod = 9.5;
     if (SAVE.settings.gfx === 'auto') AQ.reset(); else setQuality(SAVE.settings.gfx);
     initInput(); setBodyMode(); syncSettings();
-    addEventListener('resize', () => { resize(); if (G.screen === 'mapScr') drawBigMap(); }); addEventListener('orientationchange', () => setTimeout(resize, 200));
+    initFit();
     document.addEventListener('visibilitychange', () => { if (document.hidden) { saveNow(); if (G.state === 'play' && !G.screen) pauseGame(); if (AU.ctx) AU.ctx.suspend(); } else if (AU.ctx) AU.ctx.resume(); });
     $('loading').classList.add('hidden'); showScreen('scrTitle'); G.state = 'title';
     // start player at spawn when play pressed
