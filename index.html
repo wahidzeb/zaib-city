@@ -2569,9 +2569,23 @@ const S = {
   },
   speed(kmh, text) { return { update() { return pSpeed() * 3.6 >= kmh; }, text: text || 'Reach ' + kmh + ' km/h' }; },
   drift(meters, text) { return { start(m) { m.d0 = SAVE.stats.drift; }, update(m) { return SAVE.stats.drift - m.d0 >= meters; }, text: m => (text || 'Drift! {DRIFT} while turning') + ' ' + Math.round(SAVE.stats.drift - m.d0) + '/' + meters + ' m' }; },
-  repair() { return { update() { const v = pVeh(); return v && v.dmg < .05; }, text: 'Drive into the garage marker and repair your car', tgtF: () => { const g = nearestGarage(); return [g.x, g.z]; }, beams: () => { const g = nearestGarage(); return [beam(g.x, g.z, [0, 1, .7])]; } }; },
+  repair() { return { isRepair: 1, start(m) { m.rp = null; m.inG = 0; m.poorT = 0; },
+      update(m, dt) { const v = pVeh(); m.inG = 0; if (!v) { m.rp = null; return false; }
+        if (m.rp) { const r = m.rp; r.t += dt; v.vx *= .7; v.vz *= .7; v.roll = Math.sin(r.t * 30) * .03 * (1 - r.t / REP_T); v.dmg = Math.max(0, r.d0 * (1 - r.t / REP_T)); if (r.t - (r.k || 0) > .35) { r.k = r.t; SFX.click(); } if (r.t >= REP_T) { v.dmg = 0; v.roll = 0; m.rp = null; SFX.success(); toast('🛠️ Repaired! Good as new' + (r.cost ? ' · ' + fmtCash(r.cost) : ' · free')); return true; } return false; }
+        if (v.dmg < .05) return true;
+        m.inG = inGarage(v); if (m.inG && vSpeed(v) < 12) startRepair(m, false); return false; },
+      text: m => m.rp ? '🛠️ Repairing… ' + Math.min(99, Math.round(m.rp.t / REP_T * 100)) + '%' : (m.inG ? (m.poorT > m.t ? 'Repairs cost ' + repairCostTxt() + ' · earn cash with a 📱 job, then hit Repair' : 'Slow down in the marker to repair · ' + repairCostTxt()) : 'Drive into the garage marker and repair your car'), tgtF: () => { const g = nearestGarage(); return g ? [g.x, g.z] : null; }, beams: m => { const g = nearestGarage(); if (!g) return []; const b = beam(g.x, g.z, m.rp ? [1, .85, .2] : [0, 1, .7]); if (m.rp) b.a = .4 + .3 * Math.sin(m.rp.t * 12); return [b]; } }; },
   setTime(h, wx) { return { start() { G.tod = h; if (wx != null) { G.wx.type = wx; G.wx.amt = 1; G.wx.t = 400; } }, update() { return true; } }; },
 };
+const REP_T = 1.6;
+function repairCost(v) { return v ? Math.round(v.dmg * 250) : 0; }
+function repairCostTxt() { const c = repairCost(pVeh()); return c ? fmtCash(c) : 'free'; }
+// marker r is 6 m at the curb in front of the door; measure from the car centre with generous slack so the body never has to reach the exact centre
+function inGarage(v) { const g = nearestGarage(); if (!g || !v) return false; return dist2(g.x, g.z, v.x, v.z) < Math.pow((g.r || 6) + 5, 2); }
+function startRepair(m, manual) { const v = pVeh(); if (!m || !v || m.rp || v.dmg < .02) return; const cost = repairCost(v);
+  if (SAVE.cash < cost) { if (manual || !(m.poorT > m.t)) { toast('🔧 Repairs cost ' + fmtCash(cost) + ' but you have ' + fmtCash(SAVE.cash) + '. Do a quick job from your 📱 phone and come back!', 4); SFX.deny(); } m.poorT = m.t + 8; return; }
+  if (cost) { SAVE.cash -= cost; hudCashPop(-cost); saveNow(); zt('spend_virtual_currency', { virtual_currency_name: 'coins', value: cost, item_name: 'repair' }); }
+  m.rp = { t: 0, d0: v.dmg, cost }; SFX.cash(); toast('🔧 Sprocket is fixing your car… ' + (cost ? fmtCash(cost) : 'free'), REP_T + .4); }
 function nearestGarage() { const p = pPos(); let b = null, bd = 1e18; for (const id of W.garages) { const g = W.specials[id]; if (!isUnlocked(district(g.x, g.z))) continue; const d = dist2(g.x, g.z, p[0], p[1]); if (d < bd) { bd = d; b = g; } } return b; }
 function nearestRamp(p) { if (!p) return null; let b = null, bd = 1e18; for (const r of W.ramps) { const ex = r.x + r.fx * r.len, ez = r.z + r.fz * r.len; const d = dist2(ex, ez, p[0], p[1]); if (d < bd) { bd = d; b = r; } } return bd < 30 * 30 ? b : null; }
 // ---------- mission runtime ----------
@@ -3182,6 +3196,7 @@ function updatePrompt(dt) {
       else if (best.kind === 'house') { label = (SAVE.houses.includes(best.id) ? '🏡 ' : '🏠 ') + best.label; act = () => openHouse(best.id); }
     }
   }
+  { const m = G.mission, s = curStep(); if (m && s && s.isRepair && !G.dialog && m.inG && !m.rp && pVeh()) { label = '🛠️ Repair · ' + repairCostTxt(); act = () => startRepair(m, true); } }
   G.promptAct = act; const el = $('prompt'); if (act) { el.classList.remove('hidden'); $('bPrompt').textContent = label + (IS_TOUCH_UI() ? '' : '  [Enter]'); } else el.classList.add('hidden');
   // enter button visibility
   if (G.P.mode === 'foot') { const v = nearestEnterable(); const be = $('bEnter'); be.classList.toggle('hidden', !v); if (v) be.innerHTML = '<span>' + carEmoji(v.type) + '</span>' + (v.mode === 'traffic' ? 'ASK' : 'ENTER'); }
